@@ -1,6 +1,6 @@
 # MyBatiSuite
 
-*Note: To run the source code, create a `Packages` folder in JDK root path if not exist.*
+***Note: To run the source code, create a `Packages` folder in JDK root path if not exist.***
 
 ## Todo
 - [x] Mapper and Configuration File Templates
