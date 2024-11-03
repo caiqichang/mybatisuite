@@ -18,7 +18,6 @@ This plugin provides MyBatis supports for IntelliJ IDEA.
 - Code and Mapper Navigation
 - Mapper `include` and `resultMap` Navigation (Cross Files)
 - Kotlin Support
-
 <!-- Plugin description end -->
 
 ## Usage
