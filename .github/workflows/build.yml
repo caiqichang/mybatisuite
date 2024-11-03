@@ -3,7 +3,7 @@ name: build
 on: workflow_dispatch
 
 env:
-  java_version: 21.0.4
+  java_version: 21.0.2
 
 jobs:
   build:
