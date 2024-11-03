@@ -23,7 +23,7 @@ jobs:
         run: mkdir C:\hostedtoolcache\windows\Java_Microsoft_jdk\${{env.java_version}}\x64\Packages
 
       - name: Gradle Build Action
-        uses: gradle/gradle-build-action@v3.5.0
+        uses: gradle/actions/setup-gradle@v3.5.0
       
       - name: Build plugin
         run: ./gradlew buildPlugin
