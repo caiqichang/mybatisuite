@@ -2,6 +2,9 @@ name: build
 
 on: workflow_dispatch
 
+env:
+  java_version: 21.0.4
+
 jobs:
   build:
     runs-on: windows-latest
@@ -14,6 +17,10 @@ jobs:
         uses: actions/setup-java@v4.5.0
         with:
           distribution: microsoft
+          java-version: ${{env.java_version}}
+
+      - name: Fix Packages Folder Lost
+        run: mkdir C:\hostedtoolcache\windows\Java_Microsoft_jdk\${{env.java_version}}\x64\Packages
 
       - name: Gradle Build Action
         uses: gradle/gradle-build-action@v3.5.0
