@@ -20,15 +20,20 @@ jobs:
           java-version: ${{env.java_version}}
 
       - name: Fix Packages Folder Lost
-        run: mkdir C:\hostedtoolcache\windows\Java_Microsoft_jdk\${{env.java_version}}\x64\Packages
+        # windows
+        # run: mkdir C:\hostedtoolcache\windows\Java_Microsoft_jdk\${{env.java_version}}\x64\Packages
+        # ubuntu
+        run: mkdir /opt/hostedtoolcache/Java_Microsoft_jdk/${{env.java_version}}/x64/Packages
 
       - name: Gradle Build Action
         uses: gradle/actions/setup-gradle@v3.5.0
+
+      # ubuntu only
+      - name: Fix Premission Denied
+        run: chmod 777 ./gradlew
       
       - name: Build plugin
-        run: |
-          chmod 777 ./gradlew
-          ./gradlew buildPlugin
+        run: ./gradlew buildPlugin
       
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4.4.3
