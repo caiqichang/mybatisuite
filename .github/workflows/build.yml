@@ -29,7 +29,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v3.5.0
 
       # ubuntu only
-      - name: Fix Premission Denied
+      - name: Fix Permission Denied
         run: chmod 777 ./gradlew
       
       - name: Build plugin
