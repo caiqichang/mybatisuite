@@ -1,4 +1,4 @@
 package caiqichang.mybatisuite
 
-class App0 {
+class Test {
 }

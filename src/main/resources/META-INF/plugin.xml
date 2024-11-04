@@ -6,13 +6,21 @@
 
     <depends>com.intellij.modules.platform</depends>
 
-    <resource-bundle>caiqichang.mybatisuite</resource-bundle>
+    <resource-bundle>
+
+    </resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        
+        <consoleFilterProvider implementation="caiqichang.mybatisuite.sqllog.SqlLogConsoleFilterProvider"/>
     </extensions>
 
     <applicationListeners>
-        
+
     </applicationListeners>
+
+    <actions>
+        <action id="caiqichang.mybatisuite.sqllog.SqlLogAction" class="caiqichang.mybatisuite.sqllog.SqlLogAction" text="MyBatis SQL Log">
+            <add-to-group group-id="ConsoleEditorPopupMenu"/>
+        </action>
+    </actions>
 </idea-plugin>
