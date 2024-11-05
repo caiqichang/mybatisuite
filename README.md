@@ -15,8 +15,18 @@ This plugin provides MyBatis supports for IntelliJ IDEA.
 - [ ] Kotlin Support
 <!-- Plugin description end -->
 
-## Usage
-todo
+## Usage - todo
+Using mapper file template:
+
+![mapper-file-template]()
+
+Open SQL log catching:
+
+![sql-log-catching]()
+
+Code navigation:
+
+![code-navigation]()
 
 ## Donation
 Support me by AFDIAN: https://afdian.com/a/caiqichang
