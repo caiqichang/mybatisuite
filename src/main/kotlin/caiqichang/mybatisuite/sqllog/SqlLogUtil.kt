@@ -1,11 +1,17 @@
 package caiqichang.mybatisuite.sqllog
 
+import com.intellij.execution.filters.TextConsoleBuilderFactory
+import com.intellij.execution.ui.ConsoleView
+import com.intellij.execution.ui.ConsoleViewContentType
+import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.project.Project
+import com.intellij.openapi.wm.ToolWindowManager
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 object SqlLogUtil {
 
-    var enable = false
+    private var enable = false
 
     private val sqlPrefix = "==>  Preparing:"
     private val paramPrefix = "==> Parameters:"
@@ -17,6 +23,15 @@ object SqlLogUtil {
 
     fun handleLog(log: String) {
         if (!enable) return;
+
+        if (!inited) {
+            if (project != null) {
+                init()
+            } else {
+                return;
+            }
+        }
+
 
         // handle sql line
         if (log.startsWith(sqlPrefix)) {
@@ -79,9 +94,45 @@ object SqlLogUtil {
         // clear sql
         sql = ""
 
-        println("---- ${format.format(LocalDateTime.now())} ----")
-        println(fullSql)
-        println()
+        consoleView?.print(
+            """
+            ---- ${format.format(LocalDateTime.now())} ----
+            ${fullSql}
+        """.trimIndent(), ConsoleViewContentType.NORMAL_OUTPUT
+        )
+        
+        consoleView?.print("\n\n", ConsoleViewContentType.NORMAL_OUTPUT)
+    }
 
+    // ---- UI ----
+
+    private var consoleView: ConsoleView? = null
+    private var project: Project? = null
+    private var inited = false
+
+    fun setProject(project: Project) {
+        this.project = project
+//        init()
+    }
+
+    fun init() {
+        consoleView = TextConsoleBuilderFactory.getInstance().createBuilder(project!!).console
+        
+        val contentManager = ToolWindowManager.getInstance(project!!).getToolWindow("MyBatis")?.contentManager
+        
+//        ApplicationManager.getApplication().invokeLater {
+            contentManager?.addContent(
+                contentManager.factory.createContent(consoleView?.component, "SQL", false)
+            )
+//        }
+        
+        inited = true
+    }
+
+    fun start() {
+        ApplicationManager.getApplication().invokeLater {
+            init()
+        }
+        enable = true
     }
 }

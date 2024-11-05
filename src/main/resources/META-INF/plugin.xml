@@ -12,6 +12,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <consoleFilterProvider implementation="caiqichang.mybatisuite.sqllog.SqlLogConsoleFilterProvider"/>
+        <toolWindow id="MyBatis" factoryClass="caiqichang.mybatisuite.sqllog.SqlLogToolWindowFactory" anchor="bottom"/>
     </extensions>
 
     <applicationListeners>

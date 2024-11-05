@@ -5,6 +5,6 @@ import com.intellij.openapi.project.DumbAwareAction
 
 class SqlLogAction : DumbAwareAction() {
     override fun actionPerformed(p0: AnActionEvent) {
-        SqlLogUtil.enable = true
+        SqlLogUtil.start()
     }
 }
