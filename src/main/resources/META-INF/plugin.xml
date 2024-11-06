@@ -16,4 +16,5 @@
             <add-to-group group-id="ConsoleEditorPopupMenu"/>
         </action>
     </actions>
+
 </idea-plugin>
