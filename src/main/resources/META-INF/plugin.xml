@@ -20,7 +20,7 @@
     </applicationListeners>
 
     <actions>
-        <action id="caiqichang.mybatisuite.sqllog.SqlLogAction" class="caiqichang.mybatisuite.sqllog.SqlLogAction" text="MyBatis SQL Log">
+        <action id="SqlLogAction" class="caiqichang.mybatisuite.sqllog.SqlLogAction">
             <add-to-group group-id="ConsoleEditorPopupMenu"/>
         </action>
     </actions>

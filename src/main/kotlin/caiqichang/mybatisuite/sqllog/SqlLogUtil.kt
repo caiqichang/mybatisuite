@@ -6,15 +6,13 @@ import com.intellij.execution.ui.ConsoleViewContentType
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.wm.ToolWindowManager
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 object SqlLogUtil {
 
-    private var enable = false
+    var running = false
 
-    private val sqlPrefix = "==>  Preparing:"
-    private val paramPrefix = "==> Parameters:"
+    private const val sqlPrefix = "==>  Preparing:"
+    private const val paramPrefix = "==> Parameters:"
 
     private var sql = ""
 
@@ -22,16 +20,7 @@ object SqlLogUtil {
     private var stringType = listOf("String", "Date", "Time", "LocalDate", "LocalTime", "LocalDateTime", "BigDecimal", "Timestamp")
 
     fun handleLog(log: String) {
-        if (!enable) return;
-
-        if (!inited) {
-            if (project != null) {
-                init()
-            } else {
-                return;
-            }
-        }
-
+        if (!running) return;
 
         // handle sql line
         if (log.startsWith(sqlPrefix)) {
@@ -88,7 +77,9 @@ object SqlLogUtil {
         }
     }
 
-    private val format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.nnnnnnnnn")
+    // ---- UI ----
+    
+    private var count = 1
 
     private fun showSQL(fullSql: String) {
         // clear sql
@@ -96,43 +87,25 @@ object SqlLogUtil {
 
         consoleView?.print(
             """
-            ---- ${format.format(LocalDateTime.now())} ----
+            ---- ${count++} ----
             ${fullSql}
         """.trimIndent(), ConsoleViewContentType.NORMAL_OUTPUT
         )
-        
+
         consoleView?.print("\n\n", ConsoleViewContentType.NORMAL_OUTPUT)
     }
 
-    // ---- UI ----
-
     private var consoleView: ConsoleView? = null
-    private var project: Project? = null
-    private var inited = false
 
-    fun setProject(project: Project) {
-        this.project = project
-//        init()
-    }
+    fun init(project: Project) {
+        ApplicationManager.getApplication().invokeLater {
+            consoleView = TextConsoleBuilderFactory.getInstance().createBuilder(project).console
 
-    fun init() {
-        consoleView = TextConsoleBuilderFactory.getInstance().createBuilder(project!!).console
-        
-        val contentManager = ToolWindowManager.getInstance(project!!).getToolWindow("MyBatis")?.contentManager
-        
-//        ApplicationManager.getApplication().invokeLater {
+            val contentManager = ToolWindowManager.getInstance(project).getToolWindow("MyBatis")?.contentManager
+
             contentManager?.addContent(
                 contentManager.factory.createContent(consoleView?.component, "SQL", false)
             )
-//        }
-        
-        inited = true
-    }
-
-    fun start() {
-        ApplicationManager.getApplication().invokeLater {
-            init()
         }
-        enable = true
     }
 }
