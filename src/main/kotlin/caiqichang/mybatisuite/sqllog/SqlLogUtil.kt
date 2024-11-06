@@ -73,26 +73,25 @@ object SqlLogUtil {
             }
 
             // sql only, no param
-            showSQL("" + sql)
+            showSQL(sql)
         }
     }
 
     // ---- UI ----
-    
+
     private var count = 1
 
     private fun showSQL(fullSql: String) {
-        // clear sql
-        sql = ""
-
         consoleView?.print(
             """
             ---- ${count++} ----
-            ${fullSql}
+            $fullSql
         """.trimIndent(), ConsoleViewContentType.NORMAL_OUTPUT
         )
-
         consoleView?.print("\n\n", ConsoleViewContentType.NORMAL_OUTPUT)
+
+        // clear sql
+        sql = ""
     }
 
     private var consoleView: ConsoleView? = null
@@ -100,9 +99,7 @@ object SqlLogUtil {
     fun init(project: Project) {
         ApplicationManager.getApplication().invokeLater {
             consoleView = TextConsoleBuilderFactory.getInstance().createBuilder(project).console
-
             val contentManager = ToolWindowManager.getInstance(project).getToolWindow("MyBatis")?.contentManager
-
             contentManager?.addContent(
                 contentManager.factory.createContent(consoleView?.component, "SQL", false)
             )
