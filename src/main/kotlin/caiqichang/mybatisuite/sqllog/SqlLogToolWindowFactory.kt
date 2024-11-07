@@ -6,6 +6,6 @@ import com.intellij.openapi.wm.ToolWindowFactory
 
 class SqlLogToolWindowFactory : ToolWindowFactory {
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
-        
+
     }
 }

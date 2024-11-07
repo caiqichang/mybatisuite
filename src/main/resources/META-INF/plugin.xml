@@ -12,10 +12,7 @@
         <consoleFilterProvider implementation="caiqichang.mybatisuite.sqllog.SqlLogConsoleFilterProvider"/>
         <toolWindow id="MyBatis" factoryClass="caiqichang.mybatisuite.sqllog.SqlLogToolWindowFactory" anchor="bottom"/>
         
-<!--        <definitionsScopedSearch implementation="caiqichang.mybatisuite.navigation.JavaMethodDefinitionSearch"/>-->
-        <psi.referenceProvider providerClass="caiqichang.mybatisuite.navigation.JavaMethodReferenceProvider" language="JAVA">
-            <pattern type="com.intellij.psi.PsiMethod">123</pattern>
-        </psi.referenceProvider>
+        <psi.referenceContributor implementation="caiqichang.mybatisuite.navigation.JavaMethodReferenceContributor" language="JAVA"/>
     </extensions>
 
     <actions>

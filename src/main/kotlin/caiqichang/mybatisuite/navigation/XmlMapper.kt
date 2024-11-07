@@ -15,7 +15,7 @@ interface XmlMapper : DomElement {
 
     interface IdElement : DomElement {
         @Attribute("id")
-        fun getId(): String
+        fun getId(): GenericAttributeValue<String>
     }
 
     interface Method : IdElement

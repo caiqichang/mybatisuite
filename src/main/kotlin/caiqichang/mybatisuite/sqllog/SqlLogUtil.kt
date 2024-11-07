@@ -11,8 +11,8 @@ object SqlLogUtil {
 
     var running = false
 
-    private const val sqlPrefix = "==>  Preparing:"
-    private const val paramPrefix = "==> Parameters:"
+    private const val SQL_PREFIX = "==>  Preparing:"
+    private const val PARAM_PREFIX = "==> Parameters:"
 
     private var sql = ""
 
@@ -20,17 +20,17 @@ object SqlLogUtil {
     private var stringType = listOf("String", "Date", "Time", "LocalDate", "LocalTime", "LocalDateTime", "BigDecimal", "Timestamp")
 
     fun handleLog(log: String) {
-        if (!running) return;
+        if (!running) return
 
         // handle sql line
-        if (log.startsWith(sqlPrefix)) {
-            sql = log.replaceFirst(sqlPrefix, "").trim()
-            return;
+        if (log.startsWith(SQL_PREFIX)) {
+            sql = log.replaceFirst(SQL_PREFIX, "").trim()
+            return
         }
 
         // handle param line
-        if (log.startsWith(paramPrefix) && sql.isNotBlank()) {
-            var paramStr = log.replaceFirst(paramPrefix, "").trim()
+        if (log.startsWith(PARAM_PREFIX) && sql.isNotBlank()) {
+            var paramStr = log.replaceFirst(PARAM_PREFIX, "").trim()
 
             // remove last bracket
             if (paramStr.endsWith(")")) paramStr = paramStr.substring(0, paramStr.length - 1)
