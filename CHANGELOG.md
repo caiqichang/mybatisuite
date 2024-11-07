@@ -2,6 +2,9 @@
 
 # MyBatiSuite Changelog
 
+## [1.0.2]
+- Improve plugin compatibility.
+
 ## [1.0.1]
 - Add SQL logs catching.
 - Bugs fix.
