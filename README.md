@@ -18,11 +18,11 @@ This plugin provides MyBatis supports for IntelliJ IDEA.
 ## Usage
 Using mapper file template:
 
-![mapper-file-template]()
+![mapper-file-template](screenshot/mapper-file-template.gif)
 
 Open SQL log catching:
 
-![sql-log-catching]()
+![sql-log-catching](screenshot/sql-log-catching.gif)
 
 Code navigation:
 

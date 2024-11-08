@@ -1,11 +1,25 @@
 package caiqichang.mybatisuite
 
+import com.intellij.execution.filters.Filter
 import com.intellij.execution.filters.TextConsoleBuilderFactory
+import com.intellij.execution.impl.ConsoleViewImpl
 import com.intellij.execution.ui.ConsoleView
 import com.intellij.execution.ui.ConsoleViewContentType
+import com.intellij.execution.ui.RunnerLayoutUi
+import com.intellij.icons.AllIcons
+import com.intellij.openapi.actionSystem.AnAction
+import com.intellij.openapi.actionSystem.AnActionEvent
+import com.intellij.openapi.actionSystem.DefaultActionGroup
 import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.editor.actions.ScrollToTheEndToolbarAction
+import com.intellij.openapi.editor.actions.ToggleUseSoftWrapsToolbarAction
+import com.intellij.openapi.editor.impl.softwrap.SoftWrapAppliancePlaces
+import com.intellij.openapi.editor.markup.TextAttributes
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.wm.ToolWindowManager
+import com.intellij.ui.JBColor
+import java.awt.Font
 
 object SqlLogUtil {
 
@@ -82,26 +96,50 @@ object SqlLogUtil {
     private var count = 1
 
     private fun showSQL(fullSql: String) {
-        consoleView?.print(
-            """
-            ---- ${count++} ----
-            $fullSql
-        """.trimIndent(), ConsoleViewContentType.NORMAL_OUTPUT
-        )
+        consoleView?.print("---- ${count++} ----\n", ConsoleViewContentType("Green", TextAttributes(JBColor.GREEN, null, null, null, Font.PLAIN)))
+        consoleView?.print(fullSql, ConsoleViewContentType.NORMAL_OUTPUT)
         consoleView?.print("\n\n", ConsoleViewContentType.NORMAL_OUTPUT)
 
         // clear sql
         sql = ""
     }
 
-    private var consoleView: ConsoleView? = null
+    private var init = false
+    private var consoleView: ConsoleViewImpl? = null
 
     fun init(project: Project) {
+        if (init) return
+        init = true
         ApplicationManager.getApplication().invokeLater {
-            consoleView = TextConsoleBuilderFactory.getInstance().createBuilder(project).console
+            consoleView = ConsoleViewImpl(project, true)
+            
             val contentManager = ToolWindowManager.getInstance(project).getToolWindow("MyBatis")?.contentManager
+            
+            val runnerPanel = RunnerLayoutUi.Factory.getInstance(project).create("1", "2", "3") {}
+            
+            runnerPanel.addContent(
+                runnerPanel.createContent("4", consoleView!!.component, "Log", null, consoleView?.component).apply { 
+                    isCloseable = false
+                }
+            )
+            
+            runnerPanel.options.setLeftToolbar(DefaultActionGroup().apply {
+                addAction(SqlLogAction())
+                addAction(object : ToggleUseSoftWrapsToolbarAction(SoftWrapAppliancePlaces.CONSOLE) {
+                    override fun getEditor(e: AnActionEvent): Editor? {
+                        return consoleView?.editor
+                    }
+                })
+                addAction(ScrollToTheEndToolbarAction(consoleView?.editor!!))
+                addAction(object: AnAction("Clear All", "", AllIcons.Actions.GC) {
+                    override fun actionPerformed(e: AnActionEvent) {
+                        consoleView?.clear()
+                    }
+                })
+            }, "6")
+            
             contentManager?.addContent(
-                contentManager.factory.createContent(consoleView?.component, "SQL", false)
+                contentManager.factory.createContent(runnerPanel.component, "SQL", false)
             )
         }
     }

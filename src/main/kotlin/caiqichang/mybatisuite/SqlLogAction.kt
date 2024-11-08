@@ -1,27 +1,22 @@
 package caiqichang.mybatisuite
 
+import com.intellij.icons.AllIcons
 import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 
 class SqlLogAction : AnAction() {
 
-    private var init = false
-    private var running = false
-
     override fun actionPerformed(event: AnActionEvent) {
-        if (!init && event.project != null) {
-            SqlLogUtil.init(event.project!!)
-            init = true
-        }
+        SqlLogUtil.init(event.project!!)
 
         // switch running status
-        running = !running
-        SqlLogUtil.running = running
+        SqlLogUtil.running = !SqlLogUtil.running
     }
 
     override fun update(e: AnActionEvent) {
-        e.presentation.text = "${if (running) "Stop" else "Start"} MyBatis SQL Log"
+        e.presentation.text = "${if (SqlLogUtil.running) "Stop" else "Start"} MyBatis SQL Log"
+        e.presentation.icon = if (SqlLogUtil.running) AllIcons.Actions.Suspend else AllIcons.Actions.Execute
     }
 
     override fun getActionUpdateThread(): ActionUpdateThread {
