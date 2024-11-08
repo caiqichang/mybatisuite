@@ -10,9 +10,9 @@ This plugin provides MyBatis supports for IntelliJ IDEA.
 ## Features
 - Mapper and Configuration File Templates
 - SQL Log Catching
-- Code and Mapper Navigation (Todo)
+- Code and Mapper Navigation
 - Mapper `sql`, `include`, `parameterMap` and `resultMap` Navigation (Todo, Cross Files)
-- Kotlin Support (Todo)
+- Kotlin Support
 <!-- Plugin description end -->
 
 ## Usage

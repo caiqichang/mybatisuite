@@ -4,6 +4,7 @@
 
 ## [1.0.2]
 - Improve plugin compatibility.
+- Add Java methods and XML mapper navigation.
 
 ## [1.0.1]
 - Add SQL logs catching.

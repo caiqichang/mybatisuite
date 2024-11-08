@@ -9,14 +9,14 @@
     <depends>org.jetbrains.kotlin</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <consoleFilterProvider implementation="caiqichang.mybatisuite.sqllog.SqlLogConsoleFilterProvider"/>
-        <toolWindow id="MyBatis" factoryClass="caiqichang.mybatisuite.sqllog.SqlLogToolWindowFactory" anchor="bottom"/>
+        <consoleFilterProvider implementation="caiqichang.mybatisuite.SqlLogConsoleFilterProvider"/>
+        <toolWindow id="MyBatis" factoryClass="caiqichang.mybatisuite.SqlLogToolWindowFactory" anchor="bottom"/>
         
-        <psi.referenceContributor implementation="caiqichang.mybatisuite.navigation.JavaMethodReferenceContributor" language="JAVA"/>
+        <psi.referenceContributor implementation="caiqichang.mybatisuite.XmlReferenceContributor" language="XML"/>
     </extensions>
 
     <actions>
-        <action id="SqlLogAction" class="caiqichang.mybatisuite.sqllog.SqlLogAction">
+        <action id="SqlLogAction" class="caiqichang.mybatisuite.SqlLogAction">
             <add-to-group group-id="ConsoleEditorPopupMenu"/>
         </action>
     </actions>

@@ -1,4 +1,4 @@
-package caiqichang.mybatisuite.sqllog
+package caiqichang.mybatisuite
 
 import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
