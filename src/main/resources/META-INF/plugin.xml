@@ -9,7 +9,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <consoleFilterProvider implementation="caiqichang.mybatisuite.SqlLogConsoleFilterProvider"/>
-        <toolWindow id="MyBatis" factoryClass="caiqichang.mybatisuite.SqlLogToolWindowFactory" anchor="bottom"/>
+        <toolWindow id="SqlLogToolWindowFactory" factoryClass="caiqichang.mybatisuite.SqlLogToolWindowFactory" anchor="bottom"/>
         
         <psi.referenceContributor implementation="caiqichang.mybatisuite.XmlReferenceContributor" language="XML"/>
     </extensions>

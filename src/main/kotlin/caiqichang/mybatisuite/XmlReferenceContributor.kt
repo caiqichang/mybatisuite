@@ -19,6 +19,8 @@ class XmlReferenceContributor : PsiReferenceContributor() {
                 private val METHOD_TAG = listOf("select", "insert", "update", "delete")
 
                 override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<PsiReference> {
+                    
+                    
                     if (element is XmlAttributeValue) {
                         val attribute = element.parent
                         if (attribute is XmlAttribute) {
@@ -52,19 +54,13 @@ class XmlReferenceContributor : PsiReferenceContributor() {
                 }
 
                 private fun getNamespace(element: XmlAttribute): String? {
-                    val root = getRoot(element)
-                    if (root != null && root.name == "mapper") {
-                        return root.getAttribute("namespace")?.value
-                    }
-                    return null
-                }
-
-                private fun getRoot(element: XmlAttribute): XmlTag? {
                     var current: PsiElement? = element.parent
                     while (current != null) {
                         if (current is XmlTag) {
                             if (current.parentTag == null) {
-                                return current
+                                if (current.name == "mapper") {
+                                    return current.getAttribute("namespace")?.value
+                                }
                             } else {
                                 current = current.parentTag
                             }

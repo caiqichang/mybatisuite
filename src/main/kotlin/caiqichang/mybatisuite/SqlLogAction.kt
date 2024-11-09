@@ -6,11 +6,7 @@ import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 
 class SqlLogAction : AnAction() {
-
     override fun actionPerformed(event: AnActionEvent) {
-        SqlLogUtil.init(event.project!!)
-
-        // switch running status
         SqlLogUtil.running = !SqlLogUtil.running
     }
 

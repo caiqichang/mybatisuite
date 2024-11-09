@@ -8,15 +8,15 @@ Get from [Marketplace](https://plugins.jetbrains.com/plugin/25744-mybatisuite)
 This plugin provides MyBatis supports for IntelliJ IDEA.
 
 ## Features
-- Mapper and Configuration File Templates
+- XML Mapper and Configuration File Templates
 - SQL Log Catching
-- Code and Mapper Navigation
-- Mapper `sql`, `include`, `parameterMap` and `resultMap` Navigation (Todo, Cross Files)
+- Java Code and XML Mapper Navigation
+- XML Mapper `sql`, `include`, `parameterMap` and `resultMap` Navigation (Todo, Cross Files)
 - Kotlin Support
 <!-- Plugin description end -->
 
 ## Usage
-Using mapper file template:
+Using file templates:
 
 ![mapper-file-template](screenshot/mapper-file-template.gif)
 
@@ -26,7 +26,7 @@ Open SQL log catching:
 
 Code navigation:
 
-![code-navigation]()
+![code-navigation](screenshot/code-navigation.gif)
 
 ## Donation
 Support me by AFDIAN: https://afdian.com/a/caiqichang
