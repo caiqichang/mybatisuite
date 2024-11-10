@@ -56,8 +56,10 @@ class XmlReferenceContributor : PsiReferenceContributor() {
                             val list = mutableListOf<PsiReference>()
                             val classList = JavaPsiFacade.getInstance(element.project).findClasses(namespace, GlobalSearchScope.allScope(element.project))
                             classList.forEach { clazz ->
-                                clazz.findMethodsByName(attributeValue.value, false).forEach { method ->
-                                    list.add(createReference(attributeValue, method))
+                                if (clazz.isInterface) {
+                                    clazz.findMethodsByName(attributeValue.value, false).forEach { method ->
+                                        list.add(createReference(attributeValue, method))
+                                    }
                                 }
                             }
                             return list.toArray(arrayOf())
