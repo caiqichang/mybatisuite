@@ -31,6 +31,21 @@ class XmlReferenceContributor : PsiReferenceContributor() {
                 private val METHOD_TAG = listOf("select", "insert", "update", "delete")
                 private val ENTITY_ATTRIBUTE = listOf("parameterMap", "resultMap")
 
+
+                override fun acceptsTarget(element: PsiElement): Boolean {
+                    if (element is XmlAttributeValue && !element.value.contains(".")) {
+                        val attribute = element.parent
+                        if (attribute is XmlAttribute) {
+                            // check mapper with namespace
+                            val namespace = getNamespace(attribute)
+                            if (!namespace.isNullOrEmpty()) {
+                                return true
+                            }
+                        }
+                    }
+                    return false
+                }
+
                 override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<PsiReference> {
                     if (element is XmlAttributeValue) {
                         val attribute = element.parent
@@ -208,8 +223,9 @@ class XmlReferenceContributor : PsiReferenceContributor() {
                     }
 
                     override fun getRangeInElement(): TextRange {
-                        val offset = getElement().text.indexOf(attributeValue.value)
-                        return TextRange(offset, offset + attributeValue.value.length)
+                        val text = if (attributeValue.value.contains(".")) attributeValue.value.substring(attributeValue.value.lastIndexOf(".")).replace(".", "") else attributeValue.value
+                        val offset = getElement().text.indexOf(text)
+                        return TextRange(offset, offset + text.length)
                     }
                 }
 
@@ -229,6 +245,7 @@ class XmlReferenceContributor : PsiReferenceContributor() {
                     return null
                 }
             }
+            , PsiReferenceRegistrar.LOWER_PRIORITY
         )
     }
 }

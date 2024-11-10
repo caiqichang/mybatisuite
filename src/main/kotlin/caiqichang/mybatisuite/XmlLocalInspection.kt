@@ -1,3 +1,4 @@
 package caiqichang.mybatisuite
 
-class Test
+class XmlLocalInspection {
+}
