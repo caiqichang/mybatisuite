@@ -30,3 +30,14 @@ Code navigation:
 
 ## Donation
 Support me by AFDIAN: https://afdian.com/a/caiqichang
+
+## Todo
+XML Check
+- [ ] namespace repeat
+- [ ] namespace of interface not found
+- [ ] resultMap, parameterMap, sql repeat in same file
+- [ ] resultMap, parameterMap type not found
+- [ ] refid not found
+- [ ] id of select, insert, update, delete repeat in same file
+- [ ] methods of select, insert, update, delete not found
+- [ ] resultMap, parameterMap of select, insert, update, delete not found
