@@ -8,22 +8,20 @@
     <depends>com.intellij.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <consoleFilterProvider id="caiqichang.mybatisuite.SqlLogConsoleFilterProvider" implementation="caiqichang.mybatisuite.SqlLogConsoleFilterProvider"/>
-        <toolWindow id="caiqichang.mybatisuite.SqlLogToolWindowFactory" factoryClass="caiqichang.mybatisuite.SqlLogToolWindowFactory" anchor="bottom"/>
-        
-<!--        <psi.referenceContributor implementation="caiqichang.mybatisuite.XmlReferenceContributor" language="XML"/>-->
-<!--        <psi.referenceProvider providerClass="caiqichang.mybatisuite.XMLReferenceProvider" language="XML">-->
-<!--            <pattern type="com.intellij.patterns.XmlPatterns">xmlAttributeValue</pattern>-->
-<!--        </psi.referenceProvider>-->
-<!--        <localInspection implementationClass="caiqichang.mybatisuite.XmlLocalInspection" language="XML"/>-->
-<!--        <definitionsScopedSearch implementation="caiqichang.mybatisuite.XmlDefinitionScopedSearch"/>-->
-<!--        <gotoDeclarationHandler implementation="caiqichang.mybatisuite.XmlDeclarationHandler"/>-->
-        
-        <dom.fileMetaData implementation="caiqichang.mybatisuite.MapperFileDescription" rootTagName="mapper"/>
+        <consoleFilterProvider id="caiqichang.mybatisuite.SqlLogConsoleFilterProvider"
+                               implementation="caiqichang.mybatisuite.SqlLogConsoleFilterProvider"/>
+        <toolWindow id="caiqichang.mybatisuite.SqlLogToolWindowFactory"
+                    factoryClass="caiqichang.mybatisuite.SqlLogToolWindowFactory"
+                    anchor="bottom"/>
+
+        <dom.fileMetaData id="caiqichang.mybatisuite.MapperFileDescription"
+                          implementation="caiqichang.mybatisuite.MapperFileDescription"
+                          rootTagName="mapper"/>
     </extensions>
 
     <actions>
-        <action id="caiqichang.mybatisuite.SqlLogAction" class="caiqichang.mybatisuite.SqlLogAction">
+        <action id="caiqichang.mybatisuite.SqlLogAction"
+                class="caiqichang.mybatisuite.SqlLogAction">
             <add-to-group group-id="ConsoleEditorPopupMenu"/>
         </action>
     </actions>

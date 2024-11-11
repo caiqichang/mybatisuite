@@ -1,47 +1,46 @@
 package caiqichang.mybatisuite
 
-import com.intellij.psi.PsiMethod
-import com.intellij.psi.xml.XmlTag
-import com.intellij.util.xml.Attribute
-import com.intellij.util.xml.Convert
-import com.intellij.util.xml.DomElement
-import com.intellij.util.xml.GenericAttributeValue
-import com.intellij.util.xml.SubTagList
+import com.intellij.util.xml.*
+
+// properties must be getXXX()
 
 interface Mapper : DomElement {
-    
+
     interface IdAttr : DomElement {
-        @Attribute("id")
-        fun id(): GenericAttributeValue<String>
-    }
-    
-    interface MethodIdAttr : DomElement {
-        @Convert(MethodIdConverter::class)
+        @Convert(EntityConverter::class)
         @Attribute("id")
         fun getId(): GenericAttributeValue<String>
     }
-    
+
+    interface MethodIdAttr : DomElement {
+        @Convert(MethodConverter::class)
+        @Attribute("id")
+        fun getId(): GenericAttributeValue<String>
+    }
+
     interface ResultMapAttr : DomElement {
+        @Convert(EntityUsageConverter::class)
         @Attribute("resultMap")
-        fun resultMap(): GenericAttributeValue<String>
+        fun getResultMap(): GenericAttributeValue<String>
     }
-    
+
     interface ParameterMapAttr : DomElement {
-        @Convert(ParameterMapConverter::class)
+        @Convert(EntityUsageConverter::class)
         @Attribute("parameterMap")
-        fun parameterMap(): GenericAttributeValue<XmlTag>
+        fun getParameterMap(): GenericAttributeValue<String>
     }
-    
+
     interface IncludeTag : DomElement {
+        @Convert(EntityUsageConverter::class)
         @Attribute("refid")
-        fun refid(): GenericAttributeValue<String>
+        fun getRefId(): GenericAttributeValue<String>
     }
-    
+
     interface WithInclude : DomElement {
         @SubTagList("include")
-        fun includeList(): List<IncludeTag>
+        fun getIncludeList(): List<IncludeTag>
     }
-    
+
     interface SelectTag : MethodIdAttr, ResultMapAttr, ParameterMapAttr, WithInclude
     interface InsertTag : MethodIdAttr, ParameterMapAttr, WithInclude
     interface UpdateTag : MethodIdAttr, ParameterMapAttr, WithInclude
@@ -49,28 +48,28 @@ interface Mapper : DomElement {
     interface SqlTag : IdAttr, WithInclude
     interface ResultMap : IdAttr
     interface ParameterMap : IdAttr
-    
+
     @Attribute("namespace")
-    fun namespace(): GenericAttributeValue<String>
-    
+    fun getNamespace(): GenericAttributeValue<String>
+
     @SubTagList("select")
-    fun getSelects(): List<SelectTag>
-    
+    fun getSelectList(): List<SelectTag>
+
     @SubTagList("insert")
-    fun insertList(): List<InsertTag>
-    
+    fun getInsertList(): List<InsertTag>
+
     @SubTagList("update")
-    fun updateList(): List<UpdateTag>
-    
+    fun getUpdateList(): List<UpdateTag>
+
     @SubTagList("delete")
-    fun deleteList(): List<DeleteTag>
-    
+    fun getDeleteList(): List<DeleteTag>
+
     @SubTagList("sql")
-    fun sqlList(): List<SqlTag>
-    
+    fun getSqlList(): List<SqlTag>
+
     @SubTagList("resultMap")
-    fun resultMapList(): List<ResultMap>
-    
+    fun getResultMapList(): List<ResultMap>
+
     @SubTagList("parameterMap")
-    fun parameterMapList(): List<ParameterMap>
+    fun getParameterMapList(): List<ParameterMap>
 }
