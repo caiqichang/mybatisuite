@@ -12,6 +12,10 @@ import com.intellij.util.containers.toArray
 import com.intellij.util.xml.*
 
 abstract class BaseConvert<T> : ResolvingConverter<T>() {
+    override fun fromString(s: String?, context: ConvertContext?): T? {
+        return null
+    }
+
     override fun toString(t: T?, context: ConvertContext?): String? {
         return null
     }
@@ -31,39 +35,9 @@ class MethodConverter : BaseConvert<PsiMethod>() {
 }
 
 class EntityConverter : BaseConvert<XmlAttributeValue>(), CustomReferenceConverter<XmlAttributeValue> {
-    override fun toString(t: XmlAttributeValue?, context: ConvertContext?): String? {
-//        if (context != null && t != null && t.value.isNotBlank()) {
-//            return "${MapperUtil.getNamespace(context.file)}.${t.value}"
-//        }
-        return null
-    }
-
-    override fun fromString(s: String?, context: ConvertContext?): XmlAttributeValue? {
-//        if (context != null
-//            && !s.isNullOrBlank()
-//            && context.xmlElement != null
-//            && context.xmlElement?.parent != null
-//            && context.xmlElement?.parent is XmlAttribute
-//        ) {
-//            
-//            val type = (context.xmlElement?.parent as XmlAttribute).name
-//            
-//            if (!listOf("refid", "resultMap", "parameterMap").contains(type)) return null
-//            
-//            // todo: optimisation, more strict, check tag name
-//            
-//            var namespace = MapperUtil.getNamespace(context.file)
-//            var entityName = s
-//            if (entityName.contains(".")) {
-//                namespace = entityName.substring(0, entityName.lastIndexOf("."))
-//                entityName = entityName.substring(entityName.lastIndexOf(".")).replace(".", "")
-//            }
-//            
-//            return MapperUtil.findDefinition(context.project, namespace, entityName, type)
-//        }
-        return null
-    }
-
+    
+    
+    
     override fun createReferences(value: GenericDomValue<XmlAttributeValue>?, element: PsiElement?, context: ConvertContext?): Array<PsiReference> {
         if (element != null
             && context != null
@@ -73,31 +47,30 @@ class EntityConverter : BaseConvert<XmlAttributeValue>(), CustomReferenceConvert
             && value.xmlAttributeValue?.value != null
         ) {
             return PsiClassConverter.createJavaClassReferenceProvider(value, null, object : JavaClassReferenceProvider() {
+                
+                override fun getScope(project: Project): GlobalSearchScope? {
+                    return GlobalSearchScope.allScope(project)
+                }
+
                 override fun getReferencesByString(text: String?, position: PsiElement, offsetInPosition: Int): Array<PsiReference> {
                     val defaultReference = super.getReferencesByString(text, position, offsetInPosition).toMutableList()
-//                    MapperUtil.getEntityUsage(
-//                        context.project,
-//                        MapperUtil.getNamespace(context.file),
-//                        value.xmlAttributeValue?.value,
-//                        (element.parent?.parent as XmlTag).name
-//                    ).map {
-//                        object : PsiReferenceBase<PsiElement>(element, getTextRange(position), false) {
-//
-//                            override fun resolve(): PsiElement {
-//                                return it
-//                            }
-//
-//                            override fun getVariants(): Array<Any> {
-//                                var str = getElement().text
-//                                if (str.contains(".")) {
-//                                    str = str.substring(str.lastIndexOf(".")).replace(".", "")
-//                                }
-//                                return arrayOf(str)
-//                            }
-//                        }
-//                    }.forEach {
-//                        defaultReference.add(it)
-//                    }
+                    val vr =
+                        object : PsiReferenceBase<PsiElement>(element, getTextRange(position), false) {
+                            override fun resolve(): PsiElement? {
+                                var type = (element.parent.parent as XmlTag).name
+                                if (type == "sql") type = "refid"
+                                return MapperUtil.findDefinition(context.project, MapperUtil.getNamespace(context.file), value.xmlAttributeValue?.value, type)
+                            }
+                            
+                            override fun getVariants(): Array<Any> {
+                                var str = getElement().text
+                                if (str.contains(".")) {
+                                    str = str.substring(str.indexOf(".")).replace(".", "")
+                                }
+                                return arrayOf(str)
+                            }
+                        }
+                    defaultReference.add(vr)
                     return defaultReference.toArray(arrayOf())
                 }
 
@@ -116,19 +89,6 @@ class EntityConverter : BaseConvert<XmlAttributeValue>(), CustomReferenceConvert
 }
 
 class EntityUsageConverter : BaseConvert<XmlAttributeValue>(), CustomReferenceConverter<XmlAttributeValue> {
-    override fun fromString(s: String?, context: ConvertContext?): XmlAttributeValue? {
-//        if (context != null && !s.isNullOrBlank() && context.xmlElement is XmlAttribute) {
-//            var namespace = MapperUtil.getNamespace(context.file)
-//            var entityName = s
-//            if (s.contains(".")) {
-//                namespace = s.substring(0, s.lastIndexOf("."))
-//                entityName = s.substring(s.lastIndexOf(".") + 1)
-//            }
-//            return MapperUtil.getEntity(context.project, namespace, entityName, (context.xmlElement as XmlAttribute).name).firstOrNull()
-//        }
-        return null
-    }
-
     override fun createReferences(value: GenericDomValue<XmlAttributeValue>?, element: PsiElement?, context: ConvertContext?): Array<PsiReference> {
         if (context != null && element != null && element is XmlAttributeValue) {
             var namespace = MapperUtil.getNamespace(context.file)
@@ -139,27 +99,28 @@ class EntityUsageConverter : BaseConvert<XmlAttributeValue>(), CustomReferenceCo
             }
             return PsiClassConverter.createJavaClassReferenceProvider(value, null, object : JavaClassReferenceProvider() {
 
+                override fun getScope(project: Project): GlobalSearchScope? {
+                    return GlobalSearchScope.allScope(project)
+                }
+
                 override fun getReferencesByString(text: String?, position: PsiElement, offsetInPosition: Int): Array<PsiReference> {
                     val defaultReference = super.getReferencesByString(text, position, offsetInPosition).toMutableList()
-                    MapperUtil.getEntity(context.project, namespace, entityName, (element.parent as XmlAttribute).name)
-                        .map {
-                            object : PsiReferenceBase<PsiElement>(element, getTextRange(position), false) {
+                    defaultReference.add(
+                        object : PsiReferenceBase<PsiElement>(element, getTextRange(position), false) {
 
-                                override fun resolve(): PsiElement {
-                                    return it
-                                }
-
-                                override fun getVariants(): Array<Any> {
-                                    var str = getElement().text
-                                    if (str.contains(".")) {
-                                        str = str.substring(str.indexOf(".")).replace(".", "")
-                                    }
-                                    return arrayOf(str)
-                                }
+                            override fun resolve(): PsiElement? {
+                                return MapperUtil.findDefinition(context.project, namespace, entityName, (element.parent as XmlAttribute).name)
                             }
-                        }.forEach {
-                            defaultReference.add(it)
+
+                            override fun getVariants(): Array<Any> {
+                                var str = getElement().text
+                                if (str.contains(".")) {
+                                    str = str.substring(str.indexOf(".")).replace(".", "")
+                                }
+                                return arrayOf(str)
+                            }
                         }
+                    )
                     return defaultReference.toArray(arrayOf())
                 }
 
