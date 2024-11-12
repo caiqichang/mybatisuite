@@ -1,5 +1,7 @@
 package caiqichang.mybatisuite
 
+import com.intellij.psi.xml.XmlAttributeValue
+import com.intellij.psi.xml.XmlTag
 import com.intellij.util.xml.*
 
 // properties must be getXXX()
@@ -21,19 +23,19 @@ interface Mapper : DomElement {
     interface ResultMapAttr : DomElement {
         @Convert(EntityUsageConverter::class)
         @Attribute("resultMap")
-        fun getResultMap(): GenericAttributeValue<String>
+        fun getResultMap(): GenericAttributeValue<XmlAttributeValue>
     }
 
     interface ParameterMapAttr : DomElement {
         @Convert(EntityUsageConverter::class)
         @Attribute("parameterMap")
-        fun getParameterMap(): GenericAttributeValue<String>
+        fun getParameterMap(): GenericAttributeValue<XmlAttributeValue>
     }
 
     interface IncludeTag : DomElement {
         @Convert(EntityUsageConverter::class)
         @Attribute("refid")
-        fun getRefId(): GenericAttributeValue<String>
+        fun getRefId(): GenericAttributeValue<XmlAttributeValue>
     }
 
     interface WithInclude : DomElement {

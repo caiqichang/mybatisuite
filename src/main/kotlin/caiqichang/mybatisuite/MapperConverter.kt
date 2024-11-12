@@ -1,8 +1,10 @@
 package caiqichang.mybatisuite
 
+import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.*
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.JavaClassReferenceProvider
+import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlAttributeValue
 import com.intellij.psi.xml.XmlTag
@@ -29,14 +31,35 @@ class MethodConverter : BaseConvert<PsiMethod>() {
 }
 
 class EntityConverter : BaseConvert<XmlAttributeValue>(), CustomReferenceConverter<XmlAttributeValue> {
+    override fun toString(t: XmlAttributeValue?, context: ConvertContext?): String? {
+//        if (context != null && t != null && t.value.isNotBlank()) {
+//            return "${MapperUtil.getNamespace(context.file)}.${t.value}"
+//        }
+        return null
+    }
+
     override fun fromString(s: String?, context: ConvertContext?): XmlAttributeValue? {
 //        if (context != null
 //            && !s.isNullOrBlank()
 //            && context.xmlElement != null
 //            && context.xmlElement?.parent != null
-//            && context.xmlElement?.parent is XmlTag
+//            && context.xmlElement?.parent is XmlAttribute
 //        ) {
-//            return MapperUtil.getEntity(context.project, MapperUtil.getNamespace(context.file), s, (context.xmlElement?.parent as XmlTag).name).firstOrNull()
+//            
+//            val type = (context.xmlElement?.parent as XmlAttribute).name
+//            
+//            if (!listOf("refid", "resultMap", "parameterMap").contains(type)) return null
+//            
+//            // todo: optimisation, more strict, check tag name
+//            
+//            var namespace = MapperUtil.getNamespace(context.file)
+//            var entityName = s
+//            if (entityName.contains(".")) {
+//                namespace = entityName.substring(0, entityName.lastIndexOf("."))
+//                entityName = entityName.substring(entityName.lastIndexOf(".")).replace(".", "")
+//            }
+//            
+//            return MapperUtil.findDefinition(context.project, namespace, entityName, type)
 //        }
         return null
     }
@@ -50,32 +73,31 @@ class EntityConverter : BaseConvert<XmlAttributeValue>(), CustomReferenceConvert
             && value.xmlAttributeValue?.value != null
         ) {
             return PsiClassConverter.createJavaClassReferenceProvider(value, null, object : JavaClassReferenceProvider() {
-
                 override fun getReferencesByString(text: String?, position: PsiElement, offsetInPosition: Int): Array<PsiReference> {
                     val defaultReference = super.getReferencesByString(text, position, offsetInPosition).toMutableList()
-                    MapperUtil.getEntityUsage(
-                        context.project,
-                        MapperUtil.getNamespace(context.file),
-                        value.xmlAttributeValue?.value,
-                        (element.parent?.parent as XmlTag).name
-                    ).map {
-                        object : PsiReferenceBase<PsiElement>(element, getTextRange(position), false) {
-
-                            override fun resolve(): PsiElement {
-                                return it
-                            }
-
-                            override fun getVariants(): Array<Any> {
-                                var str = getElement().text
-                                if (str.contains(".")) {
-                                    str = str.substring(str.indexOf(".")).replace(".", "")
-                                }
-                                return arrayOf(str)
-                            }
-                        }
-                    }.forEach {
-                        defaultReference.add(it)
-                    }
+//                    MapperUtil.getEntityUsage(
+//                        context.project,
+//                        MapperUtil.getNamespace(context.file),
+//                        value.xmlAttributeValue?.value,
+//                        (element.parent?.parent as XmlTag).name
+//                    ).map {
+//                        object : PsiReferenceBase<PsiElement>(element, getTextRange(position), false) {
+//
+//                            override fun resolve(): PsiElement {
+//                                return it
+//                            }
+//
+//                            override fun getVariants(): Array<Any> {
+//                                var str = getElement().text
+//                                if (str.contains(".")) {
+//                                    str = str.substring(str.lastIndexOf(".")).replace(".", "")
+//                                }
+//                                return arrayOf(str)
+//                            }
+//                        }
+//                    }.forEach {
+//                        defaultReference.add(it)
+//                    }
                     return defaultReference.toArray(arrayOf())
                 }
 
@@ -152,37 +174,5 @@ class EntityUsageConverter : BaseConvert<XmlAttributeValue>(), CustomReferenceCo
             }).getReferencesByElement(element)
         }
         return arrayOf()
-    }
-}
-
-class EntityReferenceProvider(
-    val value: String,
-    val context: ConvertContext
-) : JavaClassReferenceProvider() {
-    override fun getReferencesByElement(element: PsiElement): Array<PsiReference> {
-        val defaultReference = super.getReferencesByElement(element).toMutableList()
-        val customReference = MapperUtil.getEntityUsage(
-            context.project,
-            MapperUtil.getNamespace(context.file),
-            value,
-            (element.parent?.parent as XmlTag).name
-        ).map {
-            object : PsiReferenceBase<PsiElement>(it) {
-                override fun resolve(): PsiElement {
-                    return it
-                }
-
-                override fun getVariants(): Array<Any> {
-                    var str = getElement().text
-                    if (str.contains(".")) {
-                        str = str.substring(str.indexOf(".")).replace(".", "")
-                    }
-                    return arrayOf(str)
-                }
-            }
-        }.forEach {
-            defaultReference.add(it)
-        }
-        return defaultReference.toArray(arrayOf())
     }
 }
