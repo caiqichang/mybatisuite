@@ -8,11 +8,8 @@
     <depends>com.intellij.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <consoleFilterProvider id="caiqichang.mybatisuite.SqlLogConsoleFilterProvider"
-                               implementation="caiqichang.mybatisuite.SqlLogConsoleFilterProvider"/>
-        <toolWindow id="caiqichang.mybatisuite.SqlLogToolWindowFactory"
-                    factoryClass="caiqichang.mybatisuite.SqlLogToolWindowFactory"
-                    anchor="bottom"/>
+        <consoleFilterProvider id="caiqichang.mybatisuite.SqlLogConsoleFilterProvider" implementation="caiqichang.mybatisuite.SqlLogConsoleFilterProvider"/>
+        <toolWindow id="caiqichang.mybatisuite.SqlLogToolWindowFactory" factoryClass="caiqichang.mybatisuite.SqlLogToolWindowFactory" anchor="bottom"/>
 
         <dom.fileMetaData id="caiqichang.mybatisuite.MapperFileDescription"
                           implementation="caiqichang.mybatisuite.MapperFileDescription"
