@@ -1,4 +1,4 @@
-package caiqichang.mybatisuite
+package caiqichang.mybatisuite.sqllog
 
 import com.intellij.execution.filters.ConsoleFilterProvider
 import com.intellij.execution.filters.Filter

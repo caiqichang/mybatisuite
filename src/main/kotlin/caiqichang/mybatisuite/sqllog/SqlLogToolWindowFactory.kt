@@ -1,5 +1,6 @@
-package caiqichang.mybatisuite
+package caiqichang.mybatisuite.sqllog
 
+import caiqichang.mybatisuite.common.Icon
 import com.intellij.execution.impl.ConsoleViewImpl
 import com.intellij.execution.ui.layout.impl.RunnerLayoutUiImpl
 import com.intellij.icons.AllIcons

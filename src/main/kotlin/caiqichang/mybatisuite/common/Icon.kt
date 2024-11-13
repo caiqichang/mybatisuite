@@ -1,4 +1,4 @@
-package caiqichang.mybatisuite
+package caiqichang.mybatisuite.common
 
 import com.intellij.openapi.util.IconLoader
 

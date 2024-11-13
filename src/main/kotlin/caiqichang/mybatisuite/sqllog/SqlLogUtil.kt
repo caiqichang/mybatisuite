@@ -1,4 +1,4 @@
-package caiqichang.mybatisuite
+package caiqichang.mybatisuite.sqllog
 
 import com.intellij.execution.impl.ConsoleViewImpl
 import com.intellij.execution.ui.ConsoleViewContentType

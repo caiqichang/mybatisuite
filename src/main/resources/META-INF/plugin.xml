@@ -8,17 +8,20 @@
     <depends>com.intellij.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <consoleFilterProvider id="caiqichang.mybatisuite.SqlLogConsoleFilterProvider" implementation="caiqichang.mybatisuite.SqlLogConsoleFilterProvider"/>
-        <toolWindow id="caiqichang.mybatisuite.SqlLogToolWindowFactory" factoryClass="caiqichang.mybatisuite.SqlLogToolWindowFactory" anchor="bottom"/>
+        <consoleFilterProvider id="caiqichang.mybatisuite.sqllog.SqlLogConsoleFilterProvider" 
+                               implementation="caiqichang.mybatisuite.sqllog.SqlLogConsoleFilterProvider"/>
+        <toolWindow id="caiqichang.mybatisuite.sqllog.SqlLogToolWindowFactory" 
+                    factoryClass="caiqichang.mybatisuite.sqllog.SqlLogToolWindowFactory" 
+                    anchor="bottom"/>
 
-        <dom.fileMetaData id="caiqichang.mybatisuite.MapperFileDescription"
-                          implementation="caiqichang.mybatisuite.MapperFileDescription"
+        <dom.fileMetaData id="caiqichang.mybatisuite.navigation.MapperFileDescription"
+                          implementation="caiqichang.mybatisuite.navigation.MapperFileDescription"
                           rootTagName="mapper"/>
     </extensions>
 
     <actions>
-        <action id="caiqichang.mybatisuite.SqlLogAction"
-                class="caiqichang.mybatisuite.SqlLogAction">
+        <action id="caiqichang.mybatisuite.sqllog.SqlLogAction"
+                class="caiqichang.mybatisuite.sqllog.SqlLogAction">
             <add-to-group group-id="ConsoleEditorPopupMenu"/>
         </action>
     </actions>

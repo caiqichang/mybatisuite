@@ -1,4 +1,4 @@
-package caiqichang.mybatisuite
+package caiqichang.mybatisuite.navigation
 
 import com.intellij.openapi.module.Module
 import com.intellij.psi.xml.XmlFile

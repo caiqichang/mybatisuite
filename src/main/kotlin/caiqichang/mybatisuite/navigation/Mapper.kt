@@ -1,7 +1,6 @@
-package caiqichang.mybatisuite
+package caiqichang.mybatisuite.navigation
 
 import com.intellij.psi.xml.XmlAttributeValue
-import com.intellij.psi.xml.XmlTag
 import com.intellij.util.xml.*
 
 // properties must be getXXX()
@@ -9,7 +8,7 @@ import com.intellij.util.xml.*
 interface Mapper : DomElement {
 
     interface IdAttr : DomElement {
-        @Convert(EntityConverter::class)
+        @NameValue
         @Attribute("id")
         fun getId(): GenericAttributeValue<String>
     }
@@ -38,9 +37,42 @@ interface Mapper : DomElement {
         fun getRefId(): GenericAttributeValue<XmlAttributeValue>
     }
 
+    interface ForeachTag : WithInclude
+    interface IfTag : WithInclude
+    interface WhenTag : WithInclude
+    interface OtherwiseTag : WithInclude
+    interface WhereTag : WithInclude
+    interface SetTag : WithInclude
+    interface TrimTag : WithInclude
+    interface SelectKeyTag : WithInclude
+
     interface WithInclude : DomElement {
         @SubTagList("include")
         fun getIncludeList(): List<IncludeTag>
+
+        @SubTagList("foreach")
+        fun getForeachList(): List<ForeachTag>
+
+        @SubTagList("if")
+        fun getIfList(): List<IfTag>
+
+        @SubTagList("when")
+        fun getWhenList(): List<WhenTag>
+
+        @SubTagList("otherwise")
+        fun getOtherwiseList(): List<OtherwiseTag>
+
+        @SubTagList("where")
+        fun getWhereList(): List<WhereTag>
+
+        @SubTagList("set")
+        fun getSetList(): List<SetTag>
+
+        @SubTagList("trim")
+        fun getTrimList(): List<TrimTag>
+
+        @SubTagList("selectKey")
+        fun getSelectKeyList(): List<SelectKeyTag>
     }
 
     interface SelectTag : MethodIdAttr, ResultMapAttr, ParameterMapAttr, WithInclude
@@ -74,4 +106,5 @@ interface Mapper : DomElement {
 
     @SubTagList("parameterMap")
     fun getParameterMapList(): List<ParameterMap>
+
 }
