@@ -2,6 +2,10 @@
 
 # MyBatiSuite Changelog
 
+## [1.0.5]
+- Optimise XML mapper file resolution.
+- Add line markers between Java/Kotlin and XML mappers.
+
 ## [1.0.4]
 - Restructure code navigation.
 

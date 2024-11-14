@@ -10,11 +10,12 @@ open class BaseLineMarkerProvider : RelatedItemLineMarkerProvider() {
 
     fun getEnable() = true
 
-    fun <T : PsiElement> addMarker(element: PsiElement, targets: Collection<T>, result: MutableCollection<in RelatedItemLineMarkerInfo<*>>) {
+    fun <T : PsiElement> addMarker(element: PsiElement, targets: Collection<T>, result: MutableCollection<in RelatedItemLineMarkerInfo<*>>, tip: String) {
         if (targets.isNotEmpty()) {
             result.add(
                 NavigationGutterIconBuilder.create(Icon.LOGO)
                     .setTargets(targets)
+                    .setTooltipText(tip)
                     .createLineMarkerInfo(element)
             )
         }

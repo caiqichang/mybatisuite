@@ -19,13 +19,6 @@ class MapperLineMarkerProvider : BaseLineMarkerProvider() {
                 if (element is XmlAttributeValue && element.parent is XmlAttribute && element.parent.parent is XmlTag) {
                     val attribute = element.parent as XmlAttribute
                     val tag = element.parent?.parent as XmlTag
-                    if (attribute.name == "id" && listOf("select", "insert", "update", "delete").contains(tag.name)) {
-                        addMarker(
-                            element,
-                            MapperUtil.getMethod(element.project, MapperUtil.getNamespace(file), element.value),
-                            result,
-                        )
-                    }
 
                     if (attribute.name == "namespace" && tag.name == "mapper") {
                         addMarker(
@@ -33,6 +26,16 @@ class MapperLineMarkerProvider : BaseLineMarkerProvider() {
                             JavaPsiFacade.getInstance(element.project).findClasses(element.value, GlobalSearchScope.allScope(element.project))
                                 .filter { it.isInterface },
                             result,
+                            "Go to Interface"
+                        )
+                    }
+
+                    if (attribute.name == "id" && listOf("select", "insert", "update", "delete").contains(tag.name)) {
+                        addMarker(
+                            element,
+                            MapperUtil.getMethod(element.project, MapperUtil.getNamespace(file), element.value),
+                            result,
+                            "Go to Method"
                         )
                     }
                 }

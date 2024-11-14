@@ -6,6 +6,7 @@
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.java</depends>
+    <depends>org.jetbrains.kotlin</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <consoleFilterProvider id="caiqichang.mybatisuite.sqllog.SqlLogConsoleFilterProvider" 
@@ -18,9 +19,12 @@
                           implementation="caiqichang.mybatisuite.navigation.MapperFileDescription"
                           rootTagName="mapper"/>
         
-        <codeInsight.lineMarkerProvider id="caiqichang.mybatisuite.navigation.JavaLineMarkerProvider"
+        <codeInsight.lineMarkerProvider id="caiqichang.mybatisuite.navigation.JavaLineMarkerProvider.java"
                                         implementationClass="caiqichang.mybatisuite.navigation.JavaLineMarkerProvider"
                                         language="JAVA"/>
+        <codeInsight.lineMarkerProvider id="caiqichang.mybatisuite.navigation.JavaLineMarkerProvider.kotlin"
+                                        implementationClass="caiqichang.mybatisuite.navigation.JavaLineMarkerProvider"
+                                        language="kotlin"/>
         <codeInsight.lineMarkerProvider id="caiqichang.mybatisuite.navigation.MapperLineMarkerProvider"
                                         implementationClass="caiqichang.mybatisuite.navigation.MapperLineMarkerProvider"
                                         language="XML"/>
