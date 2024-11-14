@@ -18,9 +18,9 @@ class JavaLineMarkerProvider : BaseLineMarkerProvider() {
 
     override fun collectNavigationMarkers(element: PsiElement, result: MutableCollection<in RelatedItemLineMarkerInfo<*>>) {
         if (!getEnable()) return
-        if (element is PsiClass && element.isInterface) {
+        if (element is PsiClass && element.nameIdentifier != null && element.isInterface) {
             addMarker(
-                element,
+                element.nameIdentifier!!,
                 DomService.getInstance().getFileElements(Mapper::class.java, element.project, GlobalSearchScope.allScope(element.project))
                     .filter { it.rootElement.getNamespace().value == element.qualifiedName && it.rootElement.xmlElement != null }
                     .map { it.rootElement.xmlElement!! },
@@ -29,7 +29,7 @@ class JavaLineMarkerProvider : BaseLineMarkerProvider() {
             )
         }
 
-        if (element is PsiMethod && element.containingClass != null && element.containingClass?.isInterface == true) {
+        if (element is PsiMethod && element.nameIdentifier != null && element.containingClass != null && element.containingClass?.isInterface == true) {
             val methods = mutableListOf<XmlElement>()
             DomService.getInstance().getFileElements(Mapper::class.java, element.project, GlobalSearchScope.allScope(element.project))
                 .filter { it.rootElement.getNamespace().value == element.containingClass?.qualifiedName && it.rootElement.xmlElement != null }
@@ -39,14 +39,14 @@ class JavaLineMarkerProvider : BaseLineMarkerProvider() {
                     it.rootElement.getUpdateList().forEach { method -> addMethod(method, element, methods) }
                     it.rootElement.getDeleteList().forEach { method -> addMethod(method, element, methods) }
                 }
-            addMarker(element, methods, result, tip)
+            addMarker(element.nameIdentifier!!, methods, result, tip)
         }
 
         // kotlin support
 
-        if (element is KtClass && element.isInterface()) {
+        if (element is KtClass && element.nameIdentifier != null && element.isInterface()) {
             addMarker(
-                element,
+                element.nameIdentifier!!,
                 DomService.getInstance().getFileElements(Mapper::class.java, element.project, GlobalSearchScope.allScope(element.project))
                     .filter { it.rootElement.getNamespace().value == element.qualifiedClassNameForRendering() && it.rootElement.xmlElement != null }
                     .map { it.rootElement.xmlElement!! },
@@ -55,7 +55,7 @@ class JavaLineMarkerProvider : BaseLineMarkerProvider() {
             )
         }
 
-        if (element is KtFunction && element.containingClass() != null && element.containingClass()?.isInterface() == true) {
+        if (element is KtFunction && element.nameIdentifier != null && element.containingClass() != null && element.containingClass()?.isInterface() == true) {
             val methods = mutableListOf<XmlElement>()
             DomService.getInstance().getFileElements(Mapper::class.java, element.project, GlobalSearchScope.allScope(element.project))
                 .filter { it.rootElement.getNamespace().value == element.containingClass()?.qualifiedClassNameForRendering() && it.rootElement.xmlElement != null }
@@ -65,7 +65,7 @@ class JavaLineMarkerProvider : BaseLineMarkerProvider() {
                     it.rootElement.getUpdateList().forEach { method -> addKotlinMethod(method, element, methods) }
                     it.rootElement.getDeleteList().forEach { method -> addKotlinMethod(method, element, methods) }
                 }
-            addMarker(element, methods, result, tip)
+            addMarker(element.nameIdentifier!!, methods, result, tip)
         }
     }
 
