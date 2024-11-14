@@ -8,7 +8,7 @@ class MapperFileDescription : DomFileDescription<Mapper>(Mapper::class.java, "ma
 
     val enable = true
 
-    override fun isMyFile(file: XmlFile, module: Module?): Boolean {
-        return enable && super.isMyFile(file, module)
-    }
+    // must override, constructor and super function do not check the root tag name 
+    override fun isMyFile(file: XmlFile, module: Module?) =
+        file.rootTag != null && file.rootTag?.name == "mapper" && enable
 }

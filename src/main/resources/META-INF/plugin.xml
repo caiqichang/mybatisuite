@@ -17,6 +17,13 @@
         <dom.fileMetaData id="caiqichang.mybatisuite.navigation.MapperFileDescription"
                           implementation="caiqichang.mybatisuite.navigation.MapperFileDescription"
                           rootTagName="mapper"/>
+        
+        <codeInsight.lineMarkerProvider id="caiqichang.mybatisuite.navigation.JavaLineMarkerProvider"
+                                        implementationClass="caiqichang.mybatisuite.navigation.JavaLineMarkerProvider"
+                                        language="JAVA"/>
+        <codeInsight.lineMarkerProvider id="caiqichang.mybatisuite.navigation.MapperLineMarkerProvider"
+                                        implementationClass="caiqichang.mybatisuite.navigation.MapperLineMarkerProvider"
+                                        language="XML"/>
     </extensions>
 
     <actions>

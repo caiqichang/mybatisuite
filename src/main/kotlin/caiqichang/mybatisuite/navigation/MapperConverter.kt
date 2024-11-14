@@ -27,28 +27,23 @@ class MethodConverter : BaseConvert<PsiMethod>() {
 class EntityUsageConverter : BaseConvert<XmlAttributeValue>(), CustomReferenceConverter<XmlAttributeValue> {
     override fun createReferences(value: GenericDomValue<XmlAttributeValue>?, element: PsiElement?, context: ConvertContext?): Array<PsiReference> {
         if (context != null && element != null && element is XmlAttributeValue) {
+            // use current file namespace by default
             var namespace = MapperUtil.getNamespace(context.file)
             var entityName = element.value
             if (entityName.contains(".")) {
+                // use self namespace, e.g. resultMap="com.demo.entity.MyResultMap"
                 namespace = entityName.substring(0, entityName.lastIndexOf("."))
-                entityName = getLastDotContent(entityName)
+                entityName = entityName.substring(entityName.lastIndexOf(".")).replace(".", "")
             }
 
             return PsiClassConverter.createJavaClassReferenceProvider(value, null, object : JavaClassReferenceProvider() {
                 override fun getReferencesByString(text: String?, position: PsiElement, offsetInPosition: Int): Array<PsiReference> {
                     val defaultReference = super.getReferencesByString(text, position, offsetInPosition).toMutableList()
 
+                    // append to java references, adapt to type like: resultMap="com.demo.entity.MyResultMap"
                     defaultReference.add(
                         object : PsiReferenceBase<PsiElement>(element, getTextRange(position), false) {
                             override fun resolve() = MapperUtil.findDefinition(context.project, namespace, entityName, (element.parent as XmlAttribute).name)
-
-                            override fun getVariants() =
-                                arrayOf(
-                                    if (getElement().text.contains("."))
-                                        getLastDotContent(getElement().text)
-                                    else
-                                        getElement().text
-                                )
                         }
                     )
 
@@ -57,6 +52,7 @@ class EntityUsageConverter : BaseConvert<XmlAttributeValue>(), CustomReferenceCo
 
                 fun getTextRange(position: PsiElement) =
                     if (position.text.contains("."))
+                    // only reference the last dot segment
                         TextRange.create(position.text.substring(0, position.text.lastIndexOf(".")).length + 1, position.text.length - 1)
                     else
                         ElementManipulators.getValueTextRange(position)
@@ -65,6 +61,4 @@ class EntityUsageConverter : BaseConvert<XmlAttributeValue>(), CustomReferenceCo
         }
         return arrayOf()
     }
-
-    private fun getLastDotContent(s: String) = s.substring(s.lastIndexOf(".")).replace(".", "")
 }

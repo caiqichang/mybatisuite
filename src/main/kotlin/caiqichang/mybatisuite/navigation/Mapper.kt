@@ -8,6 +8,7 @@ import com.intellij.util.xml.*
 interface Mapper : DomElement {
 
     interface IdAttr : DomElement {
+        // @NameValue set this as declaration
         @NameValue
         @Attribute("id")
         fun getId(): GenericAttributeValue<String>
@@ -46,6 +47,7 @@ interface Mapper : DomElement {
     interface TrimTag : WithInclude
     interface SelectKeyTag : WithInclude
 
+    // tags that with include <include>, recursive
     interface WithInclude : DomElement {
         @SubTagList("include")
         fun getIncludeList(): List<IncludeTag>
