@@ -29,6 +29,10 @@
         <codeInsight.lineMarkerProvider id="caiqichang.mybatisuite.navigation.MapperLineMarkerProvider"
                                         implementationClass="caiqichang.mybatisuite.navigation.MapperLineMarkerProvider"
                                         language="XML"/>
+        
+        <projectConfigurable id="caiqichang.mybatisuite.common.Setting" 
+                             instance="caiqichang.mybatisuite.common.Setting" 
+                             displayName="MyBatiSuite"/>
     </extensions>
     
     <extensions defaultExtensionNs="org.jetbrains.kotlin">
