@@ -5,20 +5,21 @@
     <vendor>caiqichang</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.xml</depends>
     <depends>com.intellij.java</depends>
     <depends>org.jetbrains.kotlin</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <consoleFilterProvider id="caiqichang.mybatisuite.sqllog.SqlLogConsoleFilterProvider" 
+        <consoleFilterProvider id="caiqichang.mybatisuite.sqllog.SqlLogConsoleFilterProvider"
                                implementation="caiqichang.mybatisuite.sqllog.SqlLogConsoleFilterProvider"/>
-        <toolWindow id="caiqichang.mybatisuite.sqllog.SqlLogToolWindowFactory" 
-                    factoryClass="caiqichang.mybatisuite.sqllog.SqlLogToolWindowFactory" 
+        <toolWindow id="caiqichang.mybatisuite.sqllog.SqlLogToolWindowFactory"
+                    factoryClass="caiqichang.mybatisuite.sqllog.SqlLogToolWindowFactory"
                     anchor="bottom"/>
 
         <dom.fileMetaData id="caiqichang.mybatisuite.navigation.MapperFileDescription"
                           implementation="caiqichang.mybatisuite.navigation.MapperFileDescription"
                           rootTagName="mapper"/>
-        
+
         <codeInsight.lineMarkerProvider id="caiqichang.mybatisuite.navigation.JavaLineMarkerProvider.java"
                                         implementationClass="caiqichang.mybatisuite.navigation.JavaLineMarkerProvider"
                                         language="JAVA"/>
@@ -28,6 +29,10 @@
         <codeInsight.lineMarkerProvider id="caiqichang.mybatisuite.navigation.MapperLineMarkerProvider"
                                         implementationClass="caiqichang.mybatisuite.navigation.MapperLineMarkerProvider"
                                         language="XML"/>
+    </extensions>
+    
+    <extensions defaultExtensionNs="org.jetbrains.kotlin">
+        <supportsKotlinPluginMode supportsK1="true" supportsK2="true"/>
     </extensions>
 
     <actions>
