@@ -30,7 +30,3 @@ Using file templates:
 
 ## Donation
 Support me by AFDIAN: https://afdian.com/a/caiqichang
-
-## Todo
-- [ ] Add settings for SQL log prefix and XML file resolution.
-- [ ] Add mapper, method, resultMap... not found hint.
