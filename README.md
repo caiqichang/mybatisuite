@@ -15,8 +15,8 @@ This plugin provides MyBatis supports for IntelliJ IDEA.
 - Kotlin Support
 
 [GitHub](https://github.com/caiqichang/mybatisuite)
- | 
-[Support Me](https://afdian.com/a/caiqichang)
+|
+[Donation](https://afdian.com/a/caiqichang)
 <!-- Plugin description end -->
 
 ## Usage
