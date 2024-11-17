@@ -13,6 +13,10 @@ This plugin provides MyBatis supports for IntelliJ IDEA.
 - SQL Log Catching
 - XML Mapper and Configuration File Templates
 - Kotlin Support
+
+[GitHub](https://github.com/caiqichang/mybatisuite)
+ | 
+[Support Me](https://afdian.com/a/caiqichang)
 <!-- Plugin description end -->
 
 ## Usage
@@ -28,5 +32,3 @@ Using file templates:
 
 ![mapper-file-template](screenshot/mapper-file-template.gif)
 
-## Donation
-Support me by AFDIAN: https://afdian.com/a/caiqichang
