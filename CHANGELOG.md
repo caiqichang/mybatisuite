@@ -2,6 +2,10 @@
 
 # MyBatiSuite Changelog
 
+## [1.0.6]
+- Optimise XML methods search.
+- Add settings for SQL log prefix and XML mapper resolving. 
+
 ## [1.0.5]
 - Optimise XML mapper file resolution.
 - Add line markers between Java/Kotlin and XML mappers.

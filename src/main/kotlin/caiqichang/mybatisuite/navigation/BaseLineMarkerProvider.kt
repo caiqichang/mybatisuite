@@ -7,9 +7,6 @@ import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder
 import com.intellij.psi.PsiElement
 
 open class BaseLineMarkerProvider : RelatedItemLineMarkerProvider() {
-
-    fun getEnable() = true
-
     fun <T : PsiElement> addMarker(element: PsiElement, targets: Collection<T>, result: MutableCollection<in RelatedItemLineMarkerInfo<*>>, tip: String) {
         if (targets.isNotEmpty()) {
             result.add(

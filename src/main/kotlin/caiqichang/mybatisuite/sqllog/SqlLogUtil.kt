@@ -1,5 +1,6 @@
 package caiqichang.mybatisuite.sqllog
 
+import caiqichang.mybatisuite.common.SettingService
 import com.intellij.execution.impl.ConsoleViewImpl
 import com.intellij.execution.ui.ConsoleViewContentType
 import com.intellij.openapi.editor.markup.TextAttributes
@@ -10,26 +11,26 @@ object SqlLogUtil {
 
     var running = false
 
-    private const val SQL_PREFIX = "==>  Preparing:"
-    private const val PARAM_PREFIX = "==> Parameters:"
-
     private var sql = ""
 
     // types that need to add single quote
     private var stringType = listOf("String", "Date", "Time", "LocalDate", "LocalTime", "LocalDateTime", "BigDecimal", "Timestamp")
 
     fun handleLog(log: String) {
+        val sqlPrefix = SettingService.instance().state.sqlPrefix
+        val parameterPrefix = SettingService.instance().state.parameterPrefix
+
         if (!running) return
 
         // handle sql line
-        if (log.startsWith(SQL_PREFIX)) {
-            sql = log.replaceFirst(SQL_PREFIX, "").trim()
+        if (log.startsWith(sqlPrefix)) {
+            sql = log.replaceFirst(sqlPrefix, "").trim()
             return
         }
 
         // handle parameter line
-        if (log.startsWith(PARAM_PREFIX) && sql.isNotBlank()) {
-            var paramStr = log.replaceFirst(PARAM_PREFIX, "").trim()
+        if (log.startsWith(parameterPrefix) && sql.isNotBlank()) {
+            var paramStr = log.replaceFirst(parameterPrefix, "").trim()
 
             // remove last bracket
             if (paramStr.endsWith(")")) paramStr = paramStr.substring(0, paramStr.length - 1)

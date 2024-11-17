@@ -12,7 +12,7 @@ import com.intellij.psi.xml.XmlTag
 class MapperLineMarkerProvider : BaseLineMarkerProvider() {
 
     override fun collectNavigationMarkers(element: PsiElement, result: MutableCollection<in RelatedItemLineMarkerInfo<*>>) {
-        if (!getEnable()) return
+        if (!MapperUtil.enableXmlMapperResolving()) return
         if (element.containingFile is XmlFile) {
             val file = element.containingFile as XmlFile
             if (file.rootTag != null && file.rootTag?.name == "mapper") {

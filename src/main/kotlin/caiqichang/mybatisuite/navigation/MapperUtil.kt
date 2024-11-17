@@ -1,5 +1,6 @@
 package caiqichang.mybatisuite.navigation
 
+import caiqichang.mybatisuite.common.SettingService
 import com.intellij.openapi.project.Project
 import com.intellij.psi.JavaPsiFacade
 import com.intellij.psi.PsiMethod
@@ -9,6 +10,8 @@ import com.intellij.psi.xml.XmlFile
 import com.intellij.util.xml.DomService
 
 object MapperUtil {
+    fun enableXmlMapperResolving() = SettingService.instance().state.enableXmlMapperResolving
+    
     fun getNamespace(xmlFile: XmlFile) = xmlFile.rootTag?.getAttributeValue("namespace") ?: ""
 
     fun getMethod(project: Project, namespace: String?, methodName: String?): List<PsiMethod> {

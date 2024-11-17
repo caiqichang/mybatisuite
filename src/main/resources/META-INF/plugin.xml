@@ -30,8 +30,10 @@
                                         implementationClass="caiqichang.mybatisuite.navigation.MapperLineMarkerProvider"
                                         language="XML"/>
         
-        <projectConfigurable id="caiqichang.mybatisuite.common.Setting" 
-                             instance="caiqichang.mybatisuite.common.Setting" 
+        <applicationService id="caiqichang.mybatisuite.common.SettingService"
+                            serviceImplementation="caiqichang.mybatisuite.common.SettingService" />
+        <projectConfigurable id="caiqichang.mybatisuite.common.SettingConfigurable" 
+                             instance="caiqichang.mybatisuite.common.SettingConfigurable"
                              displayName="MyBatiSuite"/>
     </extensions>
     

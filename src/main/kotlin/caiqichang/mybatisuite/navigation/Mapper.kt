@@ -77,16 +77,20 @@ interface Mapper : DomElement {
         fun getSelectKeyList(): List<SelectKeyTag>
     }
 
-    interface SelectTag : MethodIdAttr, ResultMapAttr, ParameterMapAttr, WithInclude
-    interface InsertTag : MethodIdAttr, ParameterMapAttr, WithInclude
-    interface UpdateTag : MethodIdAttr, ParameterMapAttr, WithInclude
-    interface DeleteTag : MethodIdAttr, ParameterMapAttr, WithInclude
+    interface MethodTag : MethodIdAttr, ResultMapAttr, ParameterMapAttr, WithInclude
+    interface SelectTag : MethodTag
+    interface InsertTag : MethodTag
+    interface UpdateTag : MethodTag
+    interface DeleteTag : MethodTag
     interface SqlTag : IdAttr, WithInclude
     interface ResultMap : IdAttr
     interface ParameterMap : IdAttr
 
     @Attribute("namespace")
     fun getNamespace(): GenericAttributeValue<String>
+
+    @SubTagsList("select", "insert", "update", "delete")
+    fun getMethodList(): List<MethodTag>
 
     @SubTagList("select")
     fun getSelectList(): List<SelectTag>

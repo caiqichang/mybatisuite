@@ -17,7 +17,7 @@ class JavaLineMarkerProvider : BaseLineMarkerProvider() {
     private val tip = "Go to XML Mapper"
 
     override fun collectNavigationMarkers(element: PsiElement, result: MutableCollection<in RelatedItemLineMarkerInfo<*>>) {
-        if (!getEnable()) return
+        if (!MapperUtil.enableXmlMapperResolving()) return
         if (element is PsiClass && element.nameIdentifier != null && element.isInterface) {
             addMarker(
                 element.nameIdentifier!!,
@@ -34,10 +34,12 @@ class JavaLineMarkerProvider : BaseLineMarkerProvider() {
             DomService.getInstance().getFileElements(Mapper::class.java, element.project, GlobalSearchScope.allScope(element.project))
                 .filter { it.rootElement.getNamespace().value == element.containingClass?.qualifiedName && it.rootElement.xmlElement != null }
                 .forEach {
-                    it.rootElement.getSelectList().forEach { method -> addMethod(method, element, methods) }
-                    it.rootElement.getInsertList().forEach { method -> addMethod(method, element, methods) }
-                    it.rootElement.getUpdateList().forEach { method -> addMethod(method, element, methods) }
-                    it.rootElement.getDeleteList().forEach { method -> addMethod(method, element, methods) }
+                    it.rootElement.getMethodList().forEach { method ->
+                        if (method.getId().xmlAttributeValue != null
+                            && method.getId().xmlAttributeValue?.value == element.name
+                            && method.getId().xmlElement != null
+                        ) methods.add(method.getId().xmlElement!!)
+                    }
                 }
             addMarker(element.nameIdentifier!!, methods, result, tip)
         }
@@ -60,26 +62,14 @@ class JavaLineMarkerProvider : BaseLineMarkerProvider() {
             DomService.getInstance().getFileElements(Mapper::class.java, element.project, GlobalSearchScope.allScope(element.project))
                 .filter { it.rootElement.getNamespace().value == element.containingClass()?.qualifiedClassNameForRendering() && it.rootElement.xmlElement != null }
                 .forEach {
-                    it.rootElement.getSelectList().forEach { method -> addKotlinMethod(method, element, methods) }
-                    it.rootElement.getInsertList().forEach { method -> addKotlinMethod(method, element, methods) }
-                    it.rootElement.getUpdateList().forEach { method -> addKotlinMethod(method, element, methods) }
-                    it.rootElement.getDeleteList().forEach { method -> addKotlinMethod(method, element, methods) }
+                    it.rootElement.getMethodList().forEach { method ->
+                        if (method.getId().xmlAttributeValue != null
+                            && method.getId().xmlAttributeValue?.value == element.name
+                            && method.getId().xmlElement != null
+                        ) methods.add(method.getId().xmlElement!!)
+                    }
                 }
             addMarker(element.nameIdentifier!!, methods, result, tip)
         }
-    }
-
-    private fun addMethod(method: Mapper.MethodIdAttr, element: PsiMethod, methods: MutableList<XmlElement>) = run {
-        if (method.getId().xmlAttributeValue != null
-            && method.getId().xmlAttributeValue?.value == element.name
-            && method.getId().xmlElement != null
-        ) methods.add(method.getId().xmlElement!!)
-    }
-
-    private fun addKotlinMethod(method: Mapper.MethodIdAttr, element: KtFunction, methods: MutableList<XmlElement>) = run {
-        if (method.getId().xmlAttributeValue != null
-            && method.getId().xmlAttributeValue?.value == element.name
-            && method.getId().xmlElement != null
-        ) methods.add(method.getId().xmlElement!!)
     }
 }
