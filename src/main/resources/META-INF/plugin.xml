@@ -30,6 +30,28 @@
                                         implementationClass="caiqichang.mybatisuite.navigation.MapperLineMarkerProvider"
                                         language="XML"/>
         
+        <localInspection id="caiqichang.mybatisuite.navigation.JavaInspection.java" 
+                         implementationClass="caiqichang.mybatisuite.navigation.JavaInspection"
+                         groupName="MyBatiSuite"
+                         displayName="MyBatis Java method inspection"
+                         shortName="JavaInspection"
+                         enabledByDefault="true"
+                         language="JAVA"/>
+        <localInspection id="caiqichang.mybatisuite.navigation.JavaInspection.kotlin" 
+                         implementationClass="caiqichang.mybatisuite.navigation.JavaInspection"
+                         groupName="MyBatiSuite"
+                         displayName="MyBatis Kotlin method inspection"
+                         shortName="KotlinInspection"
+                         enabledByDefault="true"
+                         language="kotlin"/>
+        <localInspection id="caiqichang.mybatisuite.navigation.MapperInspection" 
+                         implementationClass="caiqichang.mybatisuite.navigation.MapperInspection"
+                         groupName="MyBatiSuite"
+                         displayName="MyBatis XML mapper namespace and method inspection"
+                         shortName="MapperInspection"
+                         enabledByDefault="true"
+                         language="XML"/>
+        
         <applicationService id="caiqichang.mybatisuite.common.SettingService"
                             serviceImplementation="caiqichang.mybatisuite.common.SettingService" />
         <projectConfigurable id="caiqichang.mybatisuite.common.SettingConfigurable" 
