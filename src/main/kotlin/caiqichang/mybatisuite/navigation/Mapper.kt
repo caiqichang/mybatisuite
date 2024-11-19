@@ -89,8 +89,11 @@ interface Mapper : DomElement {
     @Attribute("namespace")
     fun getNamespace(): GenericAttributeValue<String>
 
+    
     @SubTagsList("select", "insert", "update", "delete")
     fun getMethodList(): List<MethodTag>
+    
+    // these method tags also need to be defined
 
     @SubTagList("select")
     fun getSelectList(): List<SelectTag>
