@@ -40,7 +40,7 @@ object SettingUI : JPanel() {
         val otherPanel = JPanel(GridBagLayout()).apply {
             add(indent(), pos(0, 0))
             add(enableXmlMapperResolving, pos(1, 0))
-            add(JLabel("Enable XML mapper resolving (reopen project is required)"), pos(2, 0, true))
+            add(JLabel("Enable XML mapper resolving (requires IDE restart)"), pos(2, 0, true))
 
         }
         add(otherPanel, pos(0, row++, true))
