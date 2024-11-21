@@ -15,7 +15,7 @@ object SettingUI : JPanel() {
     val sqlLinePrefix = JTextField()
     val parameterLinePrefix = JTextField()
     val enableXmlMapperResolving = JCheckBox()
-    
+
     fun setData(data: SettingService.Data) {
         sqlLinePrefix.text = data.sqlPrefix
         parameterLinePrefix.text = data.parameterPrefix
@@ -28,23 +28,25 @@ object SettingUI : JPanel() {
 
         add(TitledSeparator("SQL Log"), pos(0, row++, true))
         val sqlLogPanel = JPanel(GridBagLayout()).apply {
-            add(indent(), pos(0, 0))
+            add(emptyBlock(14), pos(0, 0))
             add(JLabel("SQL line prefix:"), pos(1, 0))
-            add(sqlLinePrefix, pos(2, 0, true))
+            add(emptyBlock(2), pos(2, 0))
+            add(sqlLinePrefix, pos(3, 0, true))
             add(JLabel("Parameter line prefix:"), pos(1, 1))
-            add(parameterLinePrefix, pos(2, 1, true))
+            add(parameterLinePrefix, pos(3, 1, true))
         }
         add(sqlLogPanel, pos(0, row++, true))
 
         add(TitledSeparator("Other"), pos(0, row++, true))
         val otherPanel = JPanel(GridBagLayout()).apply {
-            add(indent(), pos(0, 0))
+            add(emptyBlock(14), pos(0, 0))
             add(enableXmlMapperResolving, pos(1, 0))
-            add(JLabel("Enable XML mapper resolving (requires IDE restart)"), pos(2, 0, true))
+            add(emptyBlock(2), pos(2, 0))
+            add(JLabel("Enable XML mapper resolving (requires IDE restart)"), pos(3, 0, true))
 
         }
         add(otherPanel, pos(0, row++, true))
-        
+
         // fill the rest space, make the vertical align to top
         add(JPanel(), pos(0, row).apply {
             fill = GridBagConstraints.VERTICAL
@@ -62,7 +64,7 @@ object SettingUI : JPanel() {
         }
     }
 
-    private fun indent() = JPanel().apply {
-        preferredSize = Dimension(15, 1)
+    private fun emptyBlock(width: Int) = JPanel().apply {
+        preferredSize = Dimension(width, 1)
     }
 }
