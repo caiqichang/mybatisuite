@@ -21,7 +21,8 @@ class JavaLineMarkerProvider : BaseLineMarkerProvider() {
         if (element is PsiClass && element.nameIdentifier != null && element.isInterface) {
             addMarker(
                 element.nameIdentifier!!,
-                DomService.getInstance().getFileElements(Mapper::class.java, element.project, GlobalSearchScope.allScope(element.project))
+                DomService.getInstance()
+                    .getFileElements(Mapper::class.java, element.project, GlobalSearchScope.allScope(element.project))
                     .filter { it.rootElement.getNamespace().value == element.qualifiedName && it.rootElement.xmlElement != null }
                     .map { it.rootElement.xmlElement!! },
                 result,
@@ -31,7 +32,8 @@ class JavaLineMarkerProvider : BaseLineMarkerProvider() {
 
         if (element is PsiMethod && element.nameIdentifier != null && element.containingClass != null && element.containingClass?.isInterface == true) {
             val methods = mutableListOf<XmlElement>()
-            DomService.getInstance().getFileElements(Mapper::class.java, element.project, GlobalSearchScope.allScope(element.project))
+            DomService.getInstance()
+                .getFileElements(Mapper::class.java, element.project, GlobalSearchScope.allScope(element.project))
                 .filter { it.rootElement.getNamespace().value == element.containingClass?.qualifiedName && it.rootElement.xmlElement != null }
                 .forEach {
                     it.rootElement.getMethodList().forEach { method ->
@@ -49,7 +51,8 @@ class JavaLineMarkerProvider : BaseLineMarkerProvider() {
         if (element is KtClass && element.nameIdentifier != null && element.isInterface()) {
             addMarker(
                 element.nameIdentifier!!,
-                DomService.getInstance().getFileElements(Mapper::class.java, element.project, GlobalSearchScope.allScope(element.project))
+                DomService.getInstance()
+                    .getFileElements(Mapper::class.java, element.project, GlobalSearchScope.allScope(element.project))
                     .filter { it.rootElement.getNamespace().value == element.qualifiedClassNameForRendering() && it.rootElement.xmlElement != null }
                     .map { it.rootElement.xmlElement!! },
                 result,
@@ -59,7 +62,8 @@ class JavaLineMarkerProvider : BaseLineMarkerProvider() {
 
         if (element is KtFunction && element.nameIdentifier != null && element.containingClass() != null && element.containingClass()?.isInterface() == true) {
             val methods = mutableListOf<XmlElement>()
-            DomService.getInstance().getFileElements(Mapper::class.java, element.project, GlobalSearchScope.allScope(element.project))
+            DomService.getInstance()
+                .getFileElements(Mapper::class.java, element.project, GlobalSearchScope.allScope(element.project))
                 .filter { it.rootElement.getNamespace().value == element.containingClass()?.qualifiedClassNameForRendering() && it.rootElement.xmlElement != null }
                 .forEach {
                     it.rootElement.getMethodList().forEach { method ->

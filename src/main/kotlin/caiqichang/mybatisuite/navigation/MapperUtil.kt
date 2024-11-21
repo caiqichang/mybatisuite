@@ -17,7 +17,8 @@ object MapperUtil {
     fun getMethod(project: Project, namespace: String?, methodName: String?): List<PsiMethod> {
         val list = mutableListOf<PsiMethod>()
         if (namespace.isNullOrBlank() || methodName.isNullOrBlank()) return list
-        JavaPsiFacade.getInstance(project).findClasses(namespace, GlobalSearchScope.allScope(project))
+        JavaPsiFacade.getInstance(project)
+            .findClasses(namespace, GlobalSearchScope.allScope(project))
             .filter { it.isInterface }
             .forEach {
                 it.findMethodsByName(methodName, false)
@@ -29,7 +30,8 @@ object MapperUtil {
     fun findDefinition(project: Project, namespace: String?, entityName: String?, type: String?): XmlAttributeValue? {
         if (namespace.isNullOrBlank() || entityName.isNullOrBlank() || type.isNullOrBlank()) return null
         val list = mutableListOf<XmlAttributeValue>()
-        DomService.getInstance().getFileElements(Mapper::class.java, project, GlobalSearchScope.allScope(project))
+        DomService.getInstance()
+            .getFileElements(Mapper::class.java, project, GlobalSearchScope.allScope(project))
             .filter { it.rootElement.getNamespace().value == namespace }
             .forEach { file ->
                 when (type) {

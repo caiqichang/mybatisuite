@@ -30,7 +30,13 @@ class SqlLogToolWindowFactory : ToolWindowFactory {
             val runner = RunnerLayoutUiImpl(project, {}, "mybatis-sql-log", "MyBatis", "SQL Log")
 
             runner.addContent(
-                runner.createContent("mybatis-sql-log-console", SqlLogUtil.consoleView!!.component, "SQL", Icon.LOGO, SqlLogUtil.consoleView?.component).apply {
+                runner.createContent(
+                    "mybatis-sql-log-console",
+                    SqlLogUtil.consoleView!!.component,
+                    "SQL",
+                    Icon.LOGO,
+                    SqlLogUtil.consoleView?.component
+                ).apply {
                     isCloseable = false
                 }
             )

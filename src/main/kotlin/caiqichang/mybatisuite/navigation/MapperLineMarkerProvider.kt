@@ -23,7 +23,8 @@ class MapperLineMarkerProvider : BaseLineMarkerProvider() {
                     if (attribute.name == "namespace" && tag.name == "mapper") {
                         addMarker(
                             element,
-                            JavaPsiFacade.getInstance(element.project).findClasses(element.value, GlobalSearchScope.allScope(element.project))
+                            JavaPsiFacade.getInstance(element.project)
+                                .findClasses(element.value, GlobalSearchScope.allScope(element.project))
                                 .filter { it.isInterface },
                             result,
                             "Go to Interface"

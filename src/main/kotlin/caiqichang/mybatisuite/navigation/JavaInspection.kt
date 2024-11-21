@@ -26,8 +26,12 @@ class JavaInspection : LocalInspectionTool() {
                     && element.containingClass != null
                     && element.containingClass?.isInterface == true
                 ) {
-                    val xmlFiles = DomService.getInstance().getFileElements(Mapper::class.java, element.project, GlobalSearchScope.allScope(element.project))
-                        .filter { it.rootElement.getNamespace().value == element.containingClass?.qualifiedName && it.rootElement.xmlElement != null }
+                    val xmlFiles = DomService.getInstance()
+                        .getFileElements(Mapper::class.java, element.project, GlobalSearchScope.allScope(element.project))
+                        .filter { 
+                            it.rootElement.getNamespace().value == element.containingClass?.qualifiedName 
+                                    && it.rootElement.xmlElement != null 
+                        }
 
                     if (xmlFiles.isNotEmpty()) {
                         val methods = mutableListOf<XmlElement>()
@@ -52,8 +56,12 @@ class JavaInspection : LocalInspectionTool() {
                     && element.containingClass() != null
                     && element.containingClass()?.isInterface() == true
                 ) {
-                    val xmlFiles = DomService.getInstance().getFileElements(Mapper::class.java, element.project, GlobalSearchScope.allScope(element.project))
-                        .filter { it.rootElement.getNamespace().value == element.containingClass()?.qualifiedClassNameForRendering() && it.rootElement.xmlElement != null }
+                    val xmlFiles = DomService.getInstance()
+                        .getFileElements(Mapper::class.java, element.project, GlobalSearchScope.allScope(element.project))
+                        .filter { 
+                            it.rootElement.getNamespace().value == element.containingClass()?.qualifiedClassNameForRendering() 
+                                    && it.rootElement.xmlElement != null 
+                        }
 
                     if (xmlFiles.isNotEmpty()) {
                         val methods = mutableListOf<XmlElement>()

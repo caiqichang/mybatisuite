@@ -25,7 +25,8 @@ class MapperInspection : LocalInspectionTool() {
                             val tag = element.parent?.parent as XmlTag
 
                             if (attribute.name == "namespace" && tag.name == "mapper") {
-                                val javaFiles = JavaPsiFacade.getInstance(element.project).findClasses(element.value, GlobalSearchScope.allScope(element.project))
+                                val javaFiles = JavaPsiFacade.getInstance(element.project)
+                                    .findClasses(element.value, GlobalSearchScope.allScope(element.project))
                                     .filter { it.isInterface }
                                 if (javaFiles.isEmpty()) {
                                     holder.registerProblem(element, "MyBatis: Java/Kotlin interface not found", ProblemHighlightType.ERROR)
