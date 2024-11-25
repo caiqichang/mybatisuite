@@ -2,6 +2,9 @@
 
 # MyBatiSuite Changelog
 
+## [1.0.7]
+- Fix resolving error when SQL parameters include null value.
+
 ## [1.0.6]
 - Optimise XML methods search.
 - Add settings for SQL log prefix and XML mapper resolving. 

@@ -37,14 +37,19 @@ object SqlLogUtil {
 
             // get parameters
             if (paramStr.isNotBlank()) {
-                val paramList = paramStr.split("), ").map {
-                    // get value and type
-                    var value = it.substring(0, it.lastIndexOf("("))
-                    val type = it.substring(it.lastIndexOf("(")).replaceFirst("(", "")
-
-                    if (stringType.contains(type)) {
-                        // escape single quote and add single quote to both sides
-                        value = "'${value.replace("'", "''")}'"
+                val paramList = paramStr.split(", ").map {
+                    var value = it
+                    
+                    // null is without type
+                    if (it.endsWith(")") && it.contains("(")) {
+                        // get value and type
+                        value = it.substring(0, it.lastIndexOf("("))
+                        val type = it.substring(it.lastIndexOf("(") + 1, it.length - 1)
+    
+                        if (stringType.contains(type)) {
+                            // escape single quote and add single quote to both sides
+                            value = "'${value.replace("'", "''")}'"
+                        }
                     }
 
                     return@map value
