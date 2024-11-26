@@ -2,6 +2,9 @@
 
 # MyBatiSuite Changelog
 
+## [1.0.8]
+- Fix SQL log catching failed when open multiple projects.
+
 ## [1.0.7]
 - Fix resolving error when SQL parameters include null value.
 

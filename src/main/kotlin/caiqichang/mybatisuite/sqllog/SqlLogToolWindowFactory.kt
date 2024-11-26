@@ -25,17 +25,17 @@ class SqlLogToolWindowFactory : ToolWindowFactory {
 
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
         ApplicationManager.getApplication().invokeLater {
-            SqlLogUtil.consoleView = ConsoleViewImpl(project, true)
+            val log = SqlLogUtil.addLog(project, ConsoleViewImpl(project, true)) ?: return@invokeLater
 
             val runner = RunnerLayoutUiImpl(project, {}, "mybatis-sql-log", "MyBatis", "SQL Log")
 
             runner.addContent(
                 runner.createContent(
                     "mybatis-sql-log-console",
-                    SqlLogUtil.consoleView!!.component,
+                    log.consoleView.component,
                     "SQL",
                     Icon.LOGO,
-                    SqlLogUtil.consoleView?.component
+                    log.consoleView.component
                 ).apply {
                     isCloseable = false
                 }
@@ -46,14 +46,14 @@ class SqlLogToolWindowFactory : ToolWindowFactory {
                 addAction(SqlLogAction())
 
                 addAction(object : ToggleUseSoftWrapsToolbarAction(SoftWrapAppliancePlaces.CONSOLE) {
-                    override fun getEditor(e: AnActionEvent) = SqlLogUtil.consoleView?.editor
+                    override fun getEditor(e: AnActionEvent) = log.consoleView.editor
                 })
 
-                addAction(ScrollToTheEndToolbarAction(SqlLogUtil.consoleView?.editor!!))
+                addAction(ScrollToTheEndToolbarAction(log.consoleView.editor!!))
 
                 addAction(object : AnAction("Clear All", "Clear", AllIcons.Actions.GC) {
                     override fun actionPerformed(e: AnActionEvent) {
-                        SqlLogUtil.consoleView?.clear()
+                        log.consoleView.clear()
                     }
                 })
             }, "Left")
