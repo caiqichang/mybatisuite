@@ -25,7 +25,8 @@ class SqlLogToolWindowFactory : ToolWindowFactory {
 
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
         ApplicationManager.getApplication().invokeLater {
-            val log = SqlLogUtil.addLog(project, ConsoleViewImpl(project, true)) ?: return@invokeLater
+            val log = SqlLogUtil.addSqlLog(project, ConsoleViewImpl(project, true)) ?: return@invokeLater
+            SqlLogUtil.addToolWindow(project, toolWindow)
 
             val runner = RunnerLayoutUiImpl(project, {}, "mybatis-sql-log", "MyBatis", "SQL Log")
 

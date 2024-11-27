@@ -7,13 +7,18 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 
 class SqlLogAction : AnAction() {
     override fun actionPerformed(event: AnActionEvent) {
-        SqlLogUtil.getLog(event.project)?.apply {
+        SqlLogUtil.getSqlLog(event.project)?.apply {
             running = !running
+            if (running) {
+                SqlLogUtil.getToolWindow(event.project)?.apply {
+                    activate(null)
+                }
+            }
         }
     }
 
     override fun update(event: AnActionEvent) {
-        SqlLogUtil.getLog(event.project)?.apply {
+        SqlLogUtil.getSqlLog(event.project)?.apply {
             event.presentation.text = "${if (running) "Stop" else "Start"} MyBatis SQL Log"
             event.presentation.icon = if (running) AllIcons.Actions.Suspend else AllIcons.Actions.Execute
         }
