@@ -30,13 +30,11 @@ class SqlLog(
 
         // handle parameter line
         if (log.startsWith(parameterPrefix) && sql.isNotBlank()) {
-            var paramStr = log.replaceFirst(parameterPrefix, "").trim()
-
-            // remove last bracket
-            if (paramStr.endsWith(")")) paramStr = paramStr.substring(0, paramStr.length - 1)
+            val paramStr = log.replaceFirst(parameterPrefix, "").trim()
 
             // get parameters
             if (paramStr.isNotBlank()) {
+                var part = ""
                 val paramList = paramStr.split(", ").map {
                     var value = it
 
@@ -46,14 +44,20 @@ class SqlLog(
                         value = it.substring(0, it.lastIndexOf("("))
                         val type = it.substring(it.lastIndexOf("(") + 1, it.length - 1)
 
+                        value = "${part}${value}"
+                        part = ""
+
                         if (stringType.contains(type)) {
                             // escape single quote and add single quote to both sides
                             value = "'${value.replace("'", "''")}'"
                         }
+                    } else if (part != "" || value != "null") {
+                        part += "${value}, "
+                        return@map null
                     }
 
                     return@map value
-                }
+                }.filterNotNull()
 
                 // get indexes of parameters
                 val pos = mutableListOf<Int>()

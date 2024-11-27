@@ -2,6 +2,9 @@
 
 # MyBatiSuite Changelog
 
+## [1.1.0]
+- Fix SQL log parameters resolving error.
+
 ## [1.0.9]
 - Optimise SQL log catching function.
 
