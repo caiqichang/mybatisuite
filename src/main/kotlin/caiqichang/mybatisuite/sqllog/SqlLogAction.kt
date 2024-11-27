@@ -18,6 +18,10 @@ class SqlLogAction : AnAction() {
     }
 
     override fun update(event: AnActionEvent) {
+        // default value if not available
+        event.presentation.text = "MyBatis SQL Log Not Available"
+        event.presentation.icon = AllIcons.General.Warning
+
         SqlLogUtil.getSqlLog(event.project)?.apply {
             event.presentation.text = "${if (running) "Stop" else "Start"} MyBatis SQL Log"
             event.presentation.icon = if (running) AllIcons.Actions.Suspend else AllIcons.Actions.Execute

@@ -2,6 +2,9 @@
 
 # MyBatiSuite Changelog
 
+## [1.0.9]
+- Optimise SQL log catching function.
+
 ## [1.0.8]
 - Fix SQL log catching failed when open multiple projects.
 - Optimise SQL log action in context menu.

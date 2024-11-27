@@ -18,9 +18,8 @@ object SqlLogUtil {
         if (project != null) {
             val path = project.basePath
             if (path != null) {
-                if (sqlLogMap[path] == null) {
-                    sqlLogMap[path] = SqlLog(consoleView)
-                }
+                // renew if exist
+                sqlLogMap[path] = SqlLog(consoleView)
                 return sqlLogMap[path]
             }
         }
@@ -33,9 +32,8 @@ object SqlLogUtil {
         if (project != null) {
             val path = project.basePath
             if (path != null) {
-                if (toolWindowMap[path] == null) {
-                    toolWindowMap[path] = toolWindow
-                }
+                // renew if exist
+                toolWindowMap[path] = toolWindow
                 return toolWindowMap[path]
             }
         }
