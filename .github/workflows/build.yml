@@ -17,13 +17,13 @@ jobs:
         uses: actions/setup-java@v4.5.0
         with:
           distribution: microsoft
-          java-version: ${{env.java_version}}
+          # java-version: ${{env.java_version}}
 
       - name: Fix Packages Folder Lost
         # windows
         # run: mkdir C:\hostedtoolcache\windows\Java_Microsoft_jdk\${{env.java_version}}\x64\Packages
         # ubuntu
-        run: mkdir /opt/hostedtoolcache/Java_Microsoft_jdk/${{env.java_version}}/x64/Packages
+        # run: mkdir /opt/hostedtoolcache/Java_Microsoft_jdk/${{env.java_version}}/x64/Packages
 
       - name: Gradle Build Action
         uses: gradle/actions/setup-gradle@v3.5.0
