@@ -1,7 +1,5 @@
 # <img src="src/main/resources/META-INF/pluginIcon.svg" alt="logo" width="64"/> MyBatiSuite
 
-***Note: To run the source code, create a `Packages` folder in JDK root path if not exist.***
-
 Get from [Marketplace](https://plugins.jetbrains.com/plugin/25744-mybatisuite)
 
 <!-- Plugin description -->
