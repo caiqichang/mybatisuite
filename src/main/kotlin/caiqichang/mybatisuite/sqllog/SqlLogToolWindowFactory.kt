@@ -21,14 +21,12 @@ class SqlLogToolWindowFactory : ToolWindowFactory {
 
         toolWindow.setIcon(Icon.LOGO)
         toolWindow.stripeTitle = "MyBatis"
-    }
 
-    override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
         ApplicationManager.getApplication().invokeLater {
-            val log = SqlLogUtil.addSqlLog(project, ConsoleViewImpl(project, true)) ?: return@invokeLater
-            SqlLogUtil.addToolWindow(project, toolWindow)
+            val log = SqlLogUtil.addSqlLog(toolWindow.project, ConsoleViewImpl(toolWindow.project, true)) ?: return@invokeLater
+            SqlLogUtil.addToolWindow(toolWindow.project, toolWindow)
 
-            val runner = RunnerLayoutUiImpl(project, {}, "mybatis-sql-log", "MyBatis", "SQL Log")
+            val runner = RunnerLayoutUiImpl(toolWindow.project, {}, "mybatis-sql-log", "MyBatis", "SQL Log")
 
             runner.addContent(
                 runner.createContent(
@@ -63,5 +61,9 @@ class SqlLogToolWindowFactory : ToolWindowFactory {
                 toolWindow.contentManager.factory.createContent(runner.component, "Log", false)
             )
         }
+    }
+
+    override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
+
     }
 }

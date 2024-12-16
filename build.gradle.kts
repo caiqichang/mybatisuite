@@ -1,3 +1,4 @@
+import org.gradle.internal.jvm.Jvm
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
@@ -155,3 +156,25 @@ intellijPlatformTesting {
         }
     }
 }
+
+// fix jdk path lost Packages folder error
+val fixJdkPackages = tasks.register("createJdkPackages") {
+    val path = File("${Jvm.current().javaHome}/Packages")
+    if (!path.exists() || !path.isDirectory) {
+        path.mkdirs()
+    }
+}.name
+
+// before runIde
+tasks.getByName("runIde").dependsOn(fixJdkPackages)
+
+// before buildPlugin
+tasks.getByName("buildPlugin").dependsOn(
+    fixJdkPackages,
+    // clear earlier distribution files
+    tasks.register("clearDistributions") {
+        layout.projectDirectory.files("build/distributions").forEach { path ->
+            path.listFiles()?.forEach { file -> file.delete() }
+        }
+    }.name,
+)
