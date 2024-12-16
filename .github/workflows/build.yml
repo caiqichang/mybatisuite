@@ -19,7 +19,7 @@ jobs:
           distribution: microsoft
           # java-version: ${{env.java_version}}
 
-      - name: Fix Packages Folder Lost
+      # - name: Fix Packages Folder Lost
         # windows
         # run: mkdir C:\hostedtoolcache\windows\Java_Microsoft_jdk\${{env.java_version}}\x64\Packages
         # ubuntu
