@@ -2,6 +2,9 @@
 
 # MyBatiSuite Changelog
 
+## [1.1.2]
+- Upgrade compatibility.
+
 ## [1.1.1]
 - Fix SQL log not available after project loading.
 - Optimise Gradle runIde and buildPlugin tasks.
