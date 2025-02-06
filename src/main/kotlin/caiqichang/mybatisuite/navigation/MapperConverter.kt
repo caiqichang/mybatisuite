@@ -1,7 +1,10 @@
 package caiqichang.mybatisuite.navigation
 
 import com.intellij.openapi.util.TextRange
-import com.intellij.psi.*
+import com.intellij.psi.ElementManipulators
+import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiReference
+import com.intellij.psi.PsiReferenceBase
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.JavaClassReferenceProvider
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlAttributeValue
@@ -16,14 +19,6 @@ abstract class BaseConvert<T> : ResolvingConverter<T>() {
     override fun getVariants(context: ConvertContext?) = mutableListOf<T>()
 }
 
-class MethodConverter : BaseConvert<PsiMethod>() {
-    override fun fromString(s: String?, context: ConvertContext?) =
-        if (context != null)
-            MapperUtil.getMethod(context.project, MapperUtil.getNamespace(context.file), s).firstOrNull()
-        else
-            null
-}
-
 class EntityUsageConverter : BaseConvert<XmlAttributeValue>(), CustomReferenceConverter<XmlAttributeValue> {
     override fun createReferences(value: GenericDomValue<XmlAttributeValue>?, element: PsiElement?, context: ConvertContext?): Array<PsiReference> {
         if (context != null && element != null && element is XmlAttributeValue) {
@@ -32,8 +27,8 @@ class EntityUsageConverter : BaseConvert<XmlAttributeValue>(), CustomReferenceCo
             var entityName = element.value
             if (entityName.contains(".")) {
                 // use self namespace, e.g. resultMap="com.demo.entity.MyResultMap"
-                namespace = entityName.substring(0, entityName.lastIndexOf("."))
-                entityName = entityName.substring(entityName.lastIndexOf(".")).replace(".", "")
+                namespace = entityName.substringBeforeLast(".")
+                entityName = entityName.substringAfterLast(".")
             }
 
             return PsiClassConverter.createJavaClassReferenceProvider(value, null, object : JavaClassReferenceProvider() {

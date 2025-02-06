@@ -14,12 +14,6 @@ interface Mapper : DomElement {
         fun getId(): GenericAttributeValue<String>
     }
 
-    interface MethodIdAttr : DomElement {
-        @Convert(MethodConverter::class)
-        @Attribute("id")
-        fun getId(): GenericAttributeValue<String>
-    }
-
     interface ResultMapAttr : DomElement {
         @Convert(EntityUsageConverter::class)
         @Attribute("resultMap")
@@ -31,6 +25,15 @@ interface Mapper : DomElement {
         @Attribute("parameterMap")
         fun getParameterMap(): GenericAttributeValue<XmlAttributeValue>
     }
+
+    interface SelectAttr : DomElement {
+        @Convert(EntityUsageConverter::class)
+        @Attribute("select")
+        fun getSelect(): GenericAttributeValue<XmlAttributeValue>
+    }
+
+    interface AssociationTag : SelectAttr
+    interface CollectionTag : SelectAttr
 
     interface IncludeTag : DomElement {
         @Convert(EntityUsageConverter::class)
@@ -77,22 +80,30 @@ interface Mapper : DomElement {
         fun getSelectKeyList(): List<SelectKeyTag>
     }
 
-    interface MethodTag : MethodIdAttr, ResultMapAttr, ParameterMapAttr, WithInclude
+    interface MethodTag : IdAttr, ResultMapAttr, ParameterMapAttr, WithInclude
     interface SelectTag : MethodTag
     interface InsertTag : MethodTag
     interface UpdateTag : MethodTag
     interface DeleteTag : MethodTag
     interface SqlTag : IdAttr, WithInclude
-    interface ResultMap : IdAttr
+    interface ResultMap : IdAttr {
+        @SubTagList("association")
+        fun getAssociationList(): List<AssociationTag>
+
+        @SubTagList("collection")
+        fun getCollectionList(): List<CollectionTag>
+    }
+
     interface ParameterMap : IdAttr
+
 
     @Attribute("namespace")
     fun getNamespace(): GenericAttributeValue<String>
 
-    
+
     @SubTagsList("select", "insert", "update", "delete")
     fun getMethodList(): List<MethodTag>
-    
+
     // these method tags also need to be defined
 
     @SubTagList("select")

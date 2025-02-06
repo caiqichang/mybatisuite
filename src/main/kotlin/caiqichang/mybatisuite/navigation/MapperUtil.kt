@@ -11,7 +11,7 @@ import com.intellij.util.xml.DomService
 
 object MapperUtil {
     fun enableXmlMapperResolving() = SettingService.instance().state.enableXmlMapperResolving
-    
+
     fun getNamespace(xmlFile: XmlFile) = xmlFile.rootTag?.getAttributeValue("namespace") ?: ""
 
     fun getMethod(project: Project, namespace: String?, methodName: String?): List<PsiMethod> {
@@ -38,6 +38,7 @@ object MapperUtil {
                     "refid" -> file.rootElement.getSqlList().forEach { addDefine(entityName, it, list) }
                     "resultMap" -> file.rootElement.getResultMapList().forEach { addDefine(entityName, it, list) }
                     "parameterMap" -> file.rootElement.getParameterMapList().forEach { addDefine(entityName, it, list) }
+                    "select" -> file.rootElement.getSelectList().forEach { addDefine(entityName, it, list) }
                 }
             }
         return list.firstOrNull()

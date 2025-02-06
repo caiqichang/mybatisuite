@@ -14,9 +14,9 @@ import org.jetbrains.kotlin.psi.KtFunction
 import org.jetbrains.kotlin.psi.psiUtil.containingClass
 
 class JavaInspection : LocalInspectionTool() {
-    
+
     private val tip = "MyBatis: XML method not found"
-    
+
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : PsiElementVisitor() {
             override fun visitElement(element: PsiElement) {
@@ -28,9 +28,9 @@ class JavaInspection : LocalInspectionTool() {
                 ) {
                     val xmlFiles = DomService.getInstance()
                         .getFileElements(Mapper::class.java, element.project, GlobalSearchScope.allScope(element.project))
-                        .filter { 
-                            it.rootElement.getNamespace().value == element.containingClass?.qualifiedName 
-                                    && it.rootElement.xmlElement != null 
+                        .filter {
+                            it.rootElement.getNamespace().value == element.containingClass?.qualifiedName
+                                    && it.rootElement.xmlElement != null
                         }
 
                     if (xmlFiles.isNotEmpty()) {
@@ -44,7 +44,7 @@ class JavaInspection : LocalInspectionTool() {
                             }
                         }
                         if (methods.isEmpty()) {
-                            holder.registerProblem(element.nameIdentifier!!, tip, ProblemHighlightType.ERROR)
+                            holder.registerProblem(element.nameIdentifier!!, tip, ProblemHighlightType.WEAK_WARNING)
                         }
                     }
                 }
@@ -58,9 +58,9 @@ class JavaInspection : LocalInspectionTool() {
                 ) {
                     val xmlFiles = DomService.getInstance()
                         .getFileElements(Mapper::class.java, element.project, GlobalSearchScope.allScope(element.project))
-                        .filter { 
-                            it.rootElement.getNamespace().value == element.containingClass()?.qualifiedClassNameForRendering() 
-                                    && it.rootElement.xmlElement != null 
+                        .filter {
+                            it.rootElement.getNamespace().value == element.containingClass()?.qualifiedClassNameForRendering()
+                                    && it.rootElement.xmlElement != null
                         }
 
                     if (xmlFiles.isNotEmpty()) {
@@ -74,7 +74,7 @@ class JavaInspection : LocalInspectionTool() {
                             }
                         }
                         if (methods.isEmpty()) {
-                            holder.registerProblem(element.nameIdentifier!!, tip, ProblemHighlightType.ERROR)
+                            holder.registerProblem(element.nameIdentifier!!, tip, ProblemHighlightType.WEAK_WARNING)
                         }
                     }
                 }

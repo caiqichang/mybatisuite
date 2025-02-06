@@ -14,6 +14,8 @@ import com.intellij.psi.xml.XmlTag
 
 class MapperInspection : LocalInspectionTool() {
 
+    private val tip = "MyBatis: Java/Kotlin interface not found"
+
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : PsiElementVisitor() {
             override fun visitElement(element: PsiElement) {
@@ -29,14 +31,14 @@ class MapperInspection : LocalInspectionTool() {
                                     .findClasses(element.value, GlobalSearchScope.allScope(element.project))
                                     .filter { it.isInterface }
                                 if (javaFiles.isEmpty()) {
-                                    holder.registerProblem(element, "MyBatis: Java/Kotlin interface not found", ProblemHighlightType.ERROR)
+                                    holder.registerProblem(element, tip, ProblemHighlightType.WEAK_WARNING)
                                 }
                             }
 
                             if (attribute.name == "id" && listOf("select", "insert", "update", "delete").contains(tag.name)) {
                                 val methods = MapperUtil.getMethod(element.project, MapperUtil.getNamespace(file), element.value);
                                 if (methods.isEmpty()) {
-                                    holder.registerProblem(element, "MyBatis: Java/Kotlin method not found", ProblemHighlightType.ERROR)
+                                    holder.registerProblem(element, tip, ProblemHighlightType.WEAK_WARNING)
                                 }
                             }
                         }
