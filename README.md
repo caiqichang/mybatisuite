@@ -12,11 +12,6 @@ This plugin provides MyBatis supports for IntelliJ IDEA.
 - XML Mapper and Configuration File Templates
 - Kotlin Support
 
-<br/>
-
-[GitHub](https://github.com/caiqichang/mybatisuite)
-|
-[Donation](https://afdian.com/a/caiqichang)
 <!-- Plugin description end -->
 
 ## Usage
