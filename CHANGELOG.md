@@ -2,6 +2,9 @@
 
 # MyBatiSuite Changelog
 
+## [1.1.4]
+- Bug fix.
+
 ## [1.1.3]
 - Add `association` and `collection` support.
 - Optimise navigation and inspection between Java/Kotlin code and XML mapper.
