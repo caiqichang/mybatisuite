@@ -2,6 +2,9 @@
 
 # MyBatiSuite Changelog
 
+## [1.1.6]
+- Compatibility updates.
+
 ## [1.1.5]
 - Compatibility updates.
 
