@@ -13,7 +13,7 @@ class SqlLog(
 ) {
     private var sql = ""
 
-    // types that need to add single quote
+    // types that need to add a single quote
     private var stringType = listOf("String", "Date", "Time", "LocalDate", "LocalTime", "LocalDateTime", "BigDecimal", "Timestamp")
 
     fun handleLog(log: String) {
@@ -22,7 +22,7 @@ class SqlLog(
 
         if (!running) return
 
-        // handle sql line
+        // handle SQL line
         if (log.startsWith(sqlPrefix)) {
             sql = log.replaceFirst(sqlPrefix, "").trim()
             return
@@ -38,7 +38,7 @@ class SqlLog(
                 val paramList = paramStr.split(", ").map {
                     var value = it
 
-                    // null is without type
+                    // null is without a type
                     if (it.endsWith(")") && it.contains("(")) {
                         // get value and type
                         value = it.substring(0, it.lastIndexOf("("))
@@ -67,12 +67,12 @@ class SqlLog(
                     idx = sql.indexOf("?", idx + 1)
                 }
 
-                // fill parameters into sql
+                // fill parameters into SQL
                 if (pos.isNotEmpty()) {
                     var fullSql = ""
                     var lastIndex = 0
                     pos.forEachIndexed { index, it ->
-                        // replace with question mark if indexes are more than parameters 
+                        // replace it with a question mark if indexes are more than parameters 
                         fullSql += "${sql.substring(lastIndex, it)}${if (paramList.size > index) paramList[index] else "?"}"
                         lastIndex = it + 1
                     }
@@ -85,7 +85,7 @@ class SqlLog(
                 }
             }
 
-            // sql only, no param
+            // SQL only, no param
             showSQL(sql)
         }
     }
@@ -97,7 +97,7 @@ class SqlLog(
         consoleView.print(fullSql, ConsoleViewContentType.NORMAL_OUTPUT)
         consoleView.print("\n\n", ConsoleViewContentType.NORMAL_OUTPUT)
 
-        // clear sql
+        // clear SQL
         sql = ""
     }
 }

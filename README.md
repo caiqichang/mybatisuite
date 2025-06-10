@@ -3,7 +3,7 @@
 Get from [Marketplace](https://plugins.jetbrains.com/plugin/25744-mybatisuite)
 
 <!-- Plugin description -->
-This plugin provides MyBatis supports for IntelliJ IDEA.
+This plugin provides MyBatis support for IntelliJ IDEA.
 
 ## Features
 - Java Code and XML Mapper Navigation

@@ -8,7 +8,7 @@ import com.intellij.util.xml.*
 interface Mapper : DomElement {
 
     interface IdAttr : DomElement {
-        // @NameValue set this as declaration
+        // @NameValue set this as a declaration
         @NameValue
         @Attribute("id")
         fun getId(): GenericAttributeValue<String>

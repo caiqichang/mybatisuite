@@ -16,7 +16,7 @@
 
 ## [1.1.3]
 - Add `association` and `collection` support.
-- Optimise navigation and inspection between Java/Kotlin code and XML mapper.
+- Optimize navigation and inspection between Java/Kotlin code and XML mapper.
 
 ## [1.1.2]
 - Upgrade compatibility.
@@ -29,17 +29,17 @@
 - Fix SQL log parameters resolving error.
 
 ## [1.0.9]
-- Optimise SQL log catching function.
+- Optimize SQL log catching function.
 
 ## [1.0.8]
-- Fix SQL log catching failed when open multiple projects.
+- Fix SQL log catching failed when opening multiple projects.
 - Optimise SQL log action in context menu.
 
 ## [1.0.7]
 - Fix resolving error when SQL parameters include null value.
 
 ## [1.0.6]
-- Optimise XML methods search.
+- Optimize XML methods search.
 - Add settings for SQL log prefix and XML mapper resolving. 
 - Add inspections of Java/Kotlin methods, XML mapper namespace and methods.
 

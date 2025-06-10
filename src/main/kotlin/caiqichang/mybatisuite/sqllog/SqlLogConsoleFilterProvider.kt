@@ -6,11 +6,9 @@ import com.intellij.openapi.project.Project
 
 class SqlLogConsoleFilterProvider : ConsoleFilterProvider {
     override fun getDefaultFilters(project: Project): Array<Filter> {
-        return arrayOf(object : Filter {
-            override fun applyFilter(line: String, index: Int): Filter.Result? {
-                SqlLogUtil.getSqlLog(project)?.handleLog(line)
-                return null
-            }
+        return arrayOf(Filter { line, _ ->
+            SqlLogUtil.getSqlLog(project)?.handleLog(line)
+            null
         })
     }
 }

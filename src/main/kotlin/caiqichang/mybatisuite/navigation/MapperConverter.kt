@@ -22,7 +22,7 @@ abstract class BaseConvert<T> : ResolvingConverter<T>() {
 class EntityUsageConverter : BaseConvert<XmlAttributeValue>(), CustomReferenceConverter<XmlAttributeValue> {
     override fun createReferences(value: GenericDomValue<XmlAttributeValue>?, element: PsiElement?, context: ConvertContext?): Array<PsiReference> {
         if (context != null && element != null && element is XmlAttributeValue) {
-            // use current file namespace by default
+            // use the current file namespace by default
             var namespace = MapperUtil.getNamespace(context.file)
             var entityName = element.value
             if (entityName.contains(".")) {

@@ -6,10 +6,10 @@ import com.intellij.openapi.wm.ToolWindow
 
 object SqlLogUtil {
 
-    // using individual SQL log for each project, project path as key
+    // using individual SQL log for each project, project path as a key
     private val sqlLogMap = mutableMapOf<String, SqlLog>()
 
-    // make it easy to get current tool window
+    // make it easy to get the current tool window
     private val toolWindowMap = mutableMapOf<String, ToolWindow>()
 
     fun getSqlLog(project: Project?) = if (project == null) null else sqlLogMap[project.basePath]
