@@ -158,8 +158,20 @@ intellijPlatformTesting {
     }
 }
 
+// fix jdk path lost Packages folder error
+val fixJdkPackages = tasks.register("createJdkPackages") {
+    val path = File("${Jvm.current().javaHome}/Packages")
+    if (!path.exists() || !path.isDirectory) {
+        path.mkdirs()
+    }
+}.name
+
+// before runIde
+tasks.getByName("runIde").dependsOn(fixJdkPackages)
+
 // before buildPlugin
 tasks.getByName("buildPlugin").dependsOn(
+    fixJdkPackages,
     // clear earlier distribution files
     tasks.register("clearDistributions") {
         layout.projectDirectory.files("build/distributions").forEach { path ->
