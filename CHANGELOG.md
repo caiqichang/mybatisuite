@@ -2,6 +2,9 @@
 
 # MyBatiSuite Changelog
 
+## [1.1.8]
+- Compatibility updates.
+
 ## [1.1.7]
 - Remove Java/Kotlin and XML Mapper inspections.
 

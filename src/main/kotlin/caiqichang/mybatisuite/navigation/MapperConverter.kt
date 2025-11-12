@@ -10,16 +10,10 @@ import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlAttributeValue
 import com.intellij.util.containers.toArray
 import com.intellij.util.xml.*
+import org.jetbrains.annotations.NonNls
+import org.jetbrains.annotations.Unmodifiable
 
-abstract class BaseConvert<T> : ResolvingConverter<T>() {
-    override fun fromString(s: String?, context: ConvertContext?): T? = null
-
-    override fun toString(t: T?, context: ConvertContext?) = null
-
-    override fun getVariants(context: ConvertContext?) = mutableListOf<T>()
-}
-
-class EntityUsageConverter : BaseConvert<XmlAttributeValue>(), CustomReferenceConverter<XmlAttributeValue> {
+class EntityUsageConverter : ResolvingConverter<XmlAttributeValue>(), CustomReferenceConverter<XmlAttributeValue> {
     override fun createReferences(value: GenericDomValue<XmlAttributeValue>?, element: PsiElement?, context: ConvertContext?): Array<PsiReference> {
         if (context != null && element != null && element is XmlAttributeValue) {
             // use the current file namespace by default
@@ -55,5 +49,17 @@ class EntityUsageConverter : BaseConvert<XmlAttributeValue>(), CustomReferenceCo
             }).getReferencesByElement(element)
         }
         return arrayOf()
+    }
+
+    override fun getVariants(p0: ConvertContext): @Unmodifiable Collection<XmlAttributeValue?> {
+        return emptyList()
+    }
+
+    override fun fromString(p0: @NonNls String?, p1: ConvertContext): XmlAttributeValue? {
+        return null
+    }
+
+    override fun toString(p0: XmlAttributeValue?, p1: ConvertContext): String? {
+        return null
     }
 }
