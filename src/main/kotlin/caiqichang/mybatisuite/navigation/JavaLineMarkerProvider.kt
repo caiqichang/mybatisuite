@@ -7,7 +7,6 @@ import com.intellij.psi.PsiMethod
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.xml.XmlElement
 import com.intellij.util.xml.DomService
-import org.jetbrains.kotlin.idea.refactoring.memberInfo.qualifiedClassNameForRendering
 import org.jetbrains.kotlin.psi.KtClass
 import org.jetbrains.kotlin.psi.KtFunction
 import org.jetbrains.kotlin.psi.psiUtil.containingClass
@@ -53,7 +52,7 @@ class JavaLineMarkerProvider : BaseLineMarkerProvider() {
                 element.nameIdentifier!!,
                 DomService.getInstance()
                     .getFileElements(Mapper::class.java, element.project, GlobalSearchScope.allScope(element.project))
-                    .filter { it.rootElement.getNamespace().value == element.qualifiedClassNameForRendering() && it.rootElement.xmlElement != null }
+                    .filter { it.rootElement.getNamespace().value == element.fqName?.asString() && it.rootElement.xmlElement != null }
                     .map { it.rootElement.xmlElement!! },
                 result,
                 tip
@@ -64,7 +63,7 @@ class JavaLineMarkerProvider : BaseLineMarkerProvider() {
             val methods = mutableListOf<XmlElement>()
             DomService.getInstance()
                 .getFileElements(Mapper::class.java, element.project, GlobalSearchScope.allScope(element.project))
-                .filter { it.rootElement.getNamespace().value == element.containingClass()?.qualifiedClassNameForRendering() && it.rootElement.xmlElement != null }
+                .filter { it.rootElement.getNamespace().value == element.containingClass()?.fqName?.asString() && it.rootElement.xmlElement != null }
                 .forEach {
                     it.rootElement.getMethodList().forEach { method ->
                         if (method.getId().xmlAttributeValue != null

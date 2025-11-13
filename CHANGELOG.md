@@ -2,6 +2,9 @@
 
 # MyBatiSuite Changelog
 
+## [1.1.9]
+- Update Kotlin classname deprecated API.
+
 ## [1.1.8]
 - Compatibility updates.
 
