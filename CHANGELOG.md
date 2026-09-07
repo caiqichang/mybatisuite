@@ -2,6 +2,9 @@
 
 # MyBatiSuite Changelog
 
+## [1.2.0]
+- Upgrade to Java 25 and Gradle 9.5.0.
+
 ## [1.1.9]
 - Update Kotlin classname deprecated API.
 
