@@ -2,6 +2,9 @@
 
 # MyBatiSuite Changelog
 
+## [1.2.1]
+- Compatibility updates: remove the deprecated function DomFileDescription.isMyFile(file: XmlFile, module: Module?).
+
 ## [1.2.0]
 - Upgrade to Java 25 and Gradle 9.5.0.
 
