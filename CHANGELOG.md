@@ -2,6 +2,9 @@
 
 # MyBatiSuite Changelog
 
+## [1.2.2]
+- Compatibility updates: enable freeze reports.
+
 ## [1.2.1]
 - Compatibility updates: remove the deprecated function DomFileDescription.isMyFile(file: XmlFile, module: Module?).
 

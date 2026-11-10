@@ -35,6 +35,7 @@
         <projectConfigurable id="caiqichang.mybatisuite.common.SettingConfigurable" 
                              instance="caiqichang.mybatisuite.common.SettingConfigurable"
                              displayName="MyBatiSuite"/>
+        <errorHandler implementation="com.intellij.diagnostic.JetBrainsMarketplaceErrorReportSubmitter"/>
     </extensions>
     
     <extensions defaultExtensionNs="org.jetbrains.kotlin">
